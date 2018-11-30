@@ -1,9 +1,6 @@
 Coloured vowels open data
 ================
 
-Intro
------
-
 This dataset and code accompanies the paper "Cross-modal associations and synaesthesia: Categorical perception and structure in vowel-colour mappings in a large online sample" by Cuskley<sup>1</sup>, Dingemanse<sup>1</sup>, van Leeuwen & Kirby.
 
 <sup>1</sup> Joint first authors.
