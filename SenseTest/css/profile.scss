@@ -1,0 +1,648 @@
+/* ----------------- profiel ----------------- */
+
+#realtime {
+    position:fixed;
+    top:0;
+    left:0;
+    width:300px;
+    height:auto;
+    padding:1em;
+    border:$border;
+    background:$background;
+    margin:2em;
+    z-index:999;
+    font-weight:400;
+    font-size:13px;
+    @include rounded(5px);
+    display:none;
+}
+
+#profilepage {
+    @media (max-width:$mob+100px){
+        border-top:60px solid transparent;
+    }
+    #left,#right {
+        position:relative;
+        @include padding();
+        border:1px solid rgba($support2,0.1);
+        border-width: 1px 0 0 0;
+        background:$background;
+        hr {
+            border:1px solid rgba($grijs,0.1);
+            border-width:1px 0 0 0;
+            width:80%;
+            margin:1em auto;
+        }
+        #fold {
+            background:transparent;
+            border:0;
+            display:block;
+            width:100%;
+            padding:1.5em 1em;
+            line-height:1.5em;
+            color:$grijs;
+            text-align:center;
+            font-weight:300;
+            font-size:0.8em;
+        }
+    }
+    #left {
+        padding:0 0 2em 0;
+        #results {
+            padding:0 1em;
+            max-width:400px;
+            margin:0 auto;
+            border-top:0px;
+        }
+        .hide {
+            display:none;
+        }
+        a {
+            background:rgba(#fff,0.7);
+            padding:0.2em 1em;
+            @include rounded(3px);
+            margin-bottom:2px;
+            display:block;
+            text-align:left;
+            font-size:0.8em;
+            position: relative;
+            &:after, &:before {
+                display:none;
+            }
+            #score, #progress {
+                position:absolute;
+                top:0;
+                right:0;
+                margin:4px 10px;
+                display:none;
+                background: transparent url('images/done_sp1.png') no-repeat right;
+                background-size:auto 50%;
+                font-size:0.8em;
+                width:auto;
+                height:30px;
+                color:transparent;
+                @include rounded(100%);
+                text-align:center;
+            }
+            #progress {
+                display:block;
+                color:$support1;
+                background:none;
+            }
+            &.done {
+                #progress { display:none;}
+                #score { display:block;}
+            }
+            &.start {
+                #progress {display:none}
+            }
+            &:hover {
+                #score {
+                    background:none;
+                    color:$support1;
+                }
+            }
+        }
+    }
+
+
+    form#profile {
+        border:0 !important;
+        margin:0;
+        background:transparent;
+        #after {
+            display:none;
+        }
+        #fold {
+             display:none;
+        }
+        #top {
+            position:initial;
+            min-height:0;
+            padding:0;
+            border-bottom:0;
+            @include shadow(0,0,0,0);
+            i {
+                left:auto;
+                right:15px;
+            }
+        }
+        #skip {
+            display:none;
+        }
+        @media (max-width:-200+$mid){
+            border-top:60px solid transparent !important;
+        }
+        @media (min-width:800px) {
+            #content {
+                padding: 2em 4em 4em;
+            }
+        }
+    }
+    @media (min-width:$mid){
+        #left, #right {
+            @include rounded(5px);
+            border-width: 1px;
+        }
+        #left {
+            @include span(4 of 12);
+        }
+        #right {
+            @include span(8 of 12 last);
+            margin-bottom:4em;
+        }
+    }
+
+}
+
+form#profile {
+    // background: rgba($support2,0.05);
+    background: $background;
+    font-size: 1em;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0;
+
+    overflow:auto;
+    position:relative;
+    display:block;
+    // position: relative;
+    // padding-bottom:500px !important;
+    @media (min-height:600px){
+        height:auto;
+        // padding-bottom:0em !important;
+    }
+    @include padding();
+    @include rounded(5px);
+    #after {
+        line-height:1.3em;
+        max-width:600px;
+        margin:0 auto;
+        @include padding();
+        padding:0 1em;
+        text-align:center;
+        *[before] & {
+            display:none;
+        }
+    }
+
+    #fold {
+        background:transparent;
+        border:0;
+        display:block;
+        width:100%;
+        padding:1.5em 1em;
+        line-height:1.5em;
+        color:$grijs;
+        text-align:center;
+        font-weight:300;
+        font-size:0.8em;
+        margin:0;
+        cursor:auto;
+        outline-style:none;
+        @include select();
+    }
+    #intro {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:$background;
+        z-index:999;
+        max-width:100%;
+        padding:5em;
+        text-align:center;
+        overflow-y:scroll;
+        color:$support2;
+        @include padding();
+        #skip {
+            background:transparent;
+            color:$support2;
+            @include rounded(0);
+            padding:0.2em 0;
+            min-width:0;
+            @include link();
+            // position:absolute;
+            // right:0;
+            // top:0;
+            // margin:1em;
+        }
+        #questions {
+            font-size:0.8em;
+            color:$grijs;
+        }
+        *[after] & {
+            display:none;
+        }
+        @media (max-width:$mob){
+            line-height:1.8em;
+            padding:2em;
+        }
+    }
+    button {
+        background: rgba($support2,0.5);
+        border:0;
+        @include rounded(3px);
+        padding:0.5em 2em;
+        margin:4em auto 2em auto;
+        display:block;
+        color: #fff;
+        z-index: 1;
+        &:hover {
+            background: $support2;
+        }
+    }
+    *[before] & {
+        #continue {
+            display:block;
+        }
+        #toresults {
+            display:none;
+        }
+    }
+    *[after] & {
+        #continue {
+            display:none;
+        }
+        #toresults {
+            display:block;
+        }
+    }
+
+    #forminfo {
+        @include padding();
+        line-height: 1.5em;
+        color: rgba($support2,0.8);;
+        text-align:center;
+        max-width:600px;
+        margin:0 auto;
+        font-size:13px;
+        @include transition(0.1s);
+        padding:0 4em 8em 4em;
+        a {
+            padding:0;
+            display:inline;
+            width:auto;
+            float:none;
+            margin:auto;
+            &:after, &:before {
+                display:none;
+            }
+        }
+        &.open {
+            overflow: visible;
+            height: auto;
+            padding: 2em 2em 3em 2em;
+            border-bottom:$border;
+        }
+        @media (max-width:$mob){
+            text-align:center;
+            padding:2em;
+            font-size:11px;
+        }
+    }
+
+    #top {
+        display:none;
+        position:relative;
+        font-size: 13px !important;
+        // border-bottom:$border;
+        padding: 2em 1em 0;
+        left: 0;
+        top: 0;
+        min-height:60px;
+        height:auto !important;
+        width: 100%;
+        text-align:right;
+        @include padding();
+        @include select();
+        a {
+            cursor:pointer;
+            height:2em;
+            display:inline-block;
+            margin:0;
+            margin-right:1em;
+            float:right;
+        }
+        #logo {
+            float:left;
+            height:30px;
+            width:100px;
+            background:url('../data/images/logok-zw.png') no-repeat left;
+            background-size:80% auto;
+            opacity:0.5;
+            margin:-0.1em 0 0 0;
+            &:after, &:before {
+                display:none;
+            }
+            &:hover {
+                opacity:1;
+            }
+        }
+        i {
+            position:absolute;
+            display: block;
+            top:15px;
+            left:15px;
+            width: 2em;
+            height: 2em;
+            background: url("images/info_sp2.png") no-repeat center;
+            background-size: cover;
+            opacity: 0.5;
+            cursor: pointer;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        #skip {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin: 1em;
+            background: transparent;
+            color: $support2;
+            opacity: 0.5;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    @media (max-width:-200+$mid){
+        // border-top:60px solid transparent !important;
+        margin-top:0;
+        #top {
+            position:fixed;
+            min-height:60px;
+            background:rgba($background,0.9);
+            @include shadow(0,0,3px,rgba(0,0,0,0.3));
+            z-index:999;
+            #forminfo.open {
+                padding-bottom:2em;
+            }
+        }
+    }
+    #content {
+        @include padding();
+        padding: 1em;
+    }
+    input {
+        background: transparent;
+        border: 1px solid rgba($support2,0.2);
+        border-width: 0 0 1px 0;
+        color: $text;
+        line-height:1.5em;
+        position:absolute;
+        bottom:0;
+        left:0;
+        z-index:2;
+        margin:0;
+        @include rounded(0);
+        &:focus {
+            // background: $background;
+            border: 1px solid rgba($support2,0.2);
+            border-width: 0 0 1px 0;
+        }
+        &.ng-invalid {
+            // background: #fff;
+            border: 1px solid #f00;
+            border-width: 0 0 1px 0;
+        }
+    }
+    #content > div,
+    #content #full > div {
+        width: 100%;
+        overflow: visible;
+        clear: both;
+        float: none;
+        padding: 0;
+        position:relative;
+        height:auto;
+        min-height:2.3em;
+        margin-bottom:.5em;
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        label {
+            @include padding();
+            text-align: left;
+            line-height:1.5em;
+            font-size:.75em;
+            padding: 0.5em 0.75em;
+            color: rgba($support2,0.8);
+            position:relative;
+            left:0;
+            text-align:left;
+            margin:0;
+            width:100%;
+            max-width:100%;
+            min-width:100%;
+            margin-bottom:0.5em;
+            padding-right:0em;
+            @include select();
+            &.right {
+                left:auto;
+                right:0;
+                text-align:right;
+                position:absolute;
+                right:0;
+                top:0;
+                font-size:11px;
+                padding:0;
+                opacity:0.5;
+                &:after {
+                    content:" ";
+                    position:absolute;
+                    right:0;
+                    top:.5em;
+                    width:1.5em;
+                    height:1.5em;
+                    // background: $background url('images/done_sp2.png') no-repeat center;
+                    // opacity:0.5;
+                    background-size:15px;
+                    z-index:99;
+                }
+            }
+        }
+    }
+    #content #full {
+        overflow: hidden;
+        height: 1em;
+        padding: 0;
+        // border-top:1px solid rgba($support2,0.2);
+        position: relative;
+        margin-top: 1em;
+        @include transition(0.2s);
+        a#toggle {
+            content: "bekijk volledig profiel";
+            height: 1em;
+            // border:1px solid rgba($support2,0.2);
+            // @include rounded(5px);
+            width: 100%;
+            position: relative;
+            display: block;
+            top: 0;
+            left: 0;
+            font-size: 11px;
+            color: rgba($support2,0.5);
+            line-height: 1em;
+            @include padding();
+            text-align: right;
+            cursor: pointer;
+            &.close {
+                display: none;
+            }
+            &:after,
+            &:before {
+                display: none;
+            }
+        }
+        &:hover #toggle {
+            color: $support2;
+        }
+        &.open {
+            height: auto;
+            overflow: visible;
+            #toggle {
+                &.open {
+                    display: none;
+                }
+                &.close {
+                    display: block;
+                }
+            }
+        }
+    }
+    *[drop] {
+        border: 1px solid rgba($support2,0.2);
+    }
+    *[choose] {
+        div {
+            padding: 0 1em;
+            line-height: 2em;
+            float: left;
+            font-size: 0.8em;
+            &.selected {
+                // background:#fff;
+                // color:$support2;
+            }
+        }
+    }
+    @media (min-width:600px) {
+        border: 1px solid rgba($support2,0.2);
+        margin: 1em;
+    }
+    @media (min-width:800px) {
+        margin: 0 auto;
+        #content {
+            padding: 4em 4em 4em;
+            max-width:700px;
+            margin:0 auto;
+        }
+        label {
+            @include padding();
+            @include span(4 of 12);
+            text-align: right;
+            line-height: 1.2em;
+            padding: 0.5em;
+            color: rgba($support2,0.5);
+            + * {
+                @include padding();
+                @include span(6 of 12);
+            }
+        }
+    }
+
+    #frame & {
+        border:0;
+        margin:0;
+        max-width:100%;
+        #content {
+            max-width:auto;
+        }
+        #top {
+            a {display:none;}
+        }
+    }
+}
+
+form#profile.profilesmall {
+    margin:1em;
+    padding: 0 !important;
+    #content {
+        padding:2em;
+    }
+    #extra {
+        color:$support2;
+        font-size:0.8em;
+        padding:1em;
+        a {
+            color:$support2;
+            &:after, &:before {
+                display:none;
+            }
+        }
+    }
+}
+
+form#profile #content > div *[checkbox] {
+    padding: 1em 0 0 0;
+    i {
+        position:absolute;
+        left:5px;
+        top:1em;
+        width:30px;
+        height:30px;
+        @include rounded(5px);
+        background:$background;
+        border:$border;
+        cursor:pointer;
+        opacity:0.5;
+        &:hover {
+            background-color:#fff;
+            opacity:1;
+        }
+    }
+    &.active i {
+        background-image:url('images/done_sp2.png') !important;
+        background-size:80%;
+        background-position:center;
+        background-repeat: no-repeat;
+        background-color:transparent;
+        border:0;
+    }
+    span {
+        // position:relative;
+        display:block;
+        float:none;
+        font-size:0.8em;
+        line-height:1.3em;
+        margin-left:50px;
+        text-align:left;
+        // max-width:350px;
+        &#label {
+            color:rgba($support2,0.8);
+            height:30px;
+            min-height:30px;
+            padding-left:50px;
+            display:table-cell;
+            vertical-align: middle;
+        }
+        &#privacy {
+            font-size:10px;
+            line-height:1.5em;
+            // margin-left:0;
+            padding:1em 0;
+            color:#999;
+        }
+    }
+    #border {
+        margin-top: .5em;
+        border-top:1px solid rgba($support2,0.2);
+        height:0;
+        width:100%;
+        display:block;
+    }
+}

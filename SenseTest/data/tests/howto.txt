@@ -1,0 +1,10 @@
+tests are listed as follows:
+
+(1) according to the rules defined within tests, with three possible settings:
+
+    "relation": "main" (always shown on top tier)
+    "relation": "sub" (shown on sub tier)
+    "relation": "> other_test" (shown only if other_test has been completed)
+	
+(2) in alphabetical order according to the folder name
+

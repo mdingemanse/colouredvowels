@@ -1,0 +1,1078 @@
+/* ----------------- frame ----------------- */
+$frameheight: 500px;
+$framewidth: 800px;
+#test {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+    @include background2();
+    @include media('framemplus'){
+        background:none;
+    }
+    p {
+        text-align: center;
+    }
+}
+#test #frame {
+    background:$background;
+    overflow:hidden;
+    @include shadow(0,1px,2px,rgba(0,0,0,0.3));
+    @include rounded(5px);
+    @include media('framemplus'){
+        // screen is smaller then frame
+        @include shadow2(none);
+        @include rounded(0);
+    }
+}
+#frame {
+    position: absolute;
+    width: $framewidth;
+    height: $frameheight;
+    left:50%;
+    top:50%;
+    margin-left:($framewidth/2)*-1;
+    margin-top:($frameheight/2)*-1;
+    z-index: 1;
+    opacity: 1;
+    @include transition(0.3s);
+    &[destroy='profile()']{
+        position:relative;
+        top:0;
+        left:0;
+        margin:50px auto 300px auto;
+        height:auto;
+        @include media('framem'){
+            margin:0;
+        }
+    }
+    &[before]{
+        overflow:auto !important;
+        @include scroll();
+        z-index:99;
+        display:none;
+        &:nth-child(1){z-index:99;display:block}
+        &:nth-child(2){z-index:98;display:none;}
+        &:nth-child(3){z-index:97;display:none;}
+        &:nth-child(4){z-index:96;display:none;}
+        &:nth-child(5){z-index:95;display:none;}
+        &:nth-child(6){z-index:94;display:none;}
+    }
+    &[after]{
+        overflow:auto;
+        z-index:-1;
+    }
+    &.hide {
+        opacity:0;
+        -moz-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+    }
+    *[progress]{
+        overflow:hidden;
+        @include rounded(0 0);
+    }
+    #intro {
+        padding-top:0em;
+    }
+    #top75 {
+        position:absolute;
+        left:0;
+        top:0;
+        height:80%;
+        width:100%;
+    }
+    #left,
+    #right {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50%;
+        height: 80%;
+        overflow:visible;
+        border: 2em solid $background;
+        background-position:center;
+        background-size:cover;
+        background-repeat:no-repeat;
+        @include transition(0.1s);
+        @include padding();
+        @include rounded(5px);
+    }
+    #left {
+        border-right-width: 1em;
+    }
+    #right {
+        left: 50%;
+        border-left-width: 1em;
+    }
+    #bottom {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        bottom: 0;
+        // border-top:$border;
+        @include padding();
+        padding:0;
+        button {
+            padding:0;
+            height:100%;
+            margin:0;
+        }
+    }
+    @media (orientation:portrait) {
+        width: $frameheight;
+        height: $framewidth;
+        margin-left:($frameheight/2)*-1;
+        margin-top:($framewidth/2)*-1;
+        *[progress]{
+            @include rounded(0 0 5px 5px);
+        }
+        #left,
+        #right {
+            width: 100%;
+            height: 30%;
+            &.special {
+                height:40%;
+            }
+            border-width: 0em;
+            #selected {
+                @include rounded(0);
+            }
+        }
+        #right {
+            top: 30%;
+            height: 50%;
+            left: 0;
+            &.special {
+                top:40%;
+                height:40%;
+            }
+        }
+        @media (max-width:$frameheight){
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            margin:0;
+            *[progress]{
+                @include rounded(0);
+            }
+        }
+        @media (max-height:$framewidth){
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            margin:0;
+            *[progress]{
+                @include rounded(0);
+            }
+        }
+    }
+    @media (orientation:landscape) {
+        *[progress]{
+            @include rounded(0 0 5px 5px);
+        }
+        #left,
+        #right {
+            width: 50%;
+            height: 80%;
+            border-width: .5em;
+        }
+        #right {
+            top: 0;
+            left: 50%;
+        }
+        #bottom {
+            height:20%;
+        }
+        @media (max-width:$framewidth){
+            left:0;
+            margin-left:0;
+            width:100%;
+            height:$frameheight;
+            *[progress]{
+                @include rounded(0);
+            }
+        }
+        @media (max-height:$frameheight){
+            top:0;
+            margin-top:0;
+            height:100%;
+        }
+    }
+    $fff : -100+$framewidth;
+    @media (min-width:$fff){
+        #left, #right {
+            border:40px solid $background;
+        }
+        #left {
+            border-right:20px solid $background;
+        }
+        #right {
+            border-left:20px solid $background;
+        }
+    }
+    &.move {
+        #left,
+        #right {
+            -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+        }
+    }
+}
+
+#bottom *[choose] {
+    background:transparent;
+    padding:0;
+    margin:0;
+}
+/* ----------------- default --------------- */
+
+h3 {
+    font-size:1.8em;
+}
+label {
+    display:block;
+    font-size:1em;
+    max-width:75%;
+    margin:0 auto;
+    text-align:center;
+}
+
+/* ----------------- questions --------------- */
+
+#loading {
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    border:20px solid transparent;
+    background:$background url('../data/images/logok-zw.png') no-repeat top left;
+    background-size:80px;
+    text-align:center;
+    padding:100px;
+    z-index:999;
+    @include padding();
+    @include transition(0.1s);
+    &.hide {
+        opacity:0;
+        z-index:-1;
+        display:none;
+    }
+    &.show {
+        display:block;
+    }
+}
+/* ----------------- colors --------------- */
+*[color] {
+    overflow:visible;
+    #selected {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background: transparent;
+        position: absolute;
+        border: 1px solid rgba(0,0,0,0.1);
+        @include padding();
+        @include rounded(5px);
+    }
+    *[letter],
+    *[soundfile] #play {
+        @include select();
+        text-align: center;
+        font-size: 2em;
+        line-height: 2em;
+        height: 2em;
+        font-weight: 500;
+        text-transform: uppercase;
+        color: #000;
+        background-color: $background;
+        width: 2em;
+        float: left;
+        margin: 5px;
+        position: absolute;
+        left: 50%;
+        margin-left: -1em;
+        top: 50%;
+        margin-top: -1em;
+        @include rounded(3px);
+        // text-shadow:0 0 1px #000;
+        &.noborder {
+            text-shadow: none;
+        }
+    }
+    .spectrum {
+        background: transparent;
+        border: 0;
+        margin:0 auto;
+        display:block;
+        height:270px;
+        padding:0;
+        padding-left:7px;
+        padding-top:7px;
+        .sp-picker-container {
+            border: 0;
+            width: 100%;
+            // padding:0;
+            padding-left:0;
+            margin:0 auto;
+            display:block;
+            @include padding();
+        }
+        .sp-button-container {
+            display: none;
+        }
+        .sp-color {
+            border: 1px solid #999;
+        }
+        .sp-hue {
+            border: 1px solid #999;
+        }
+    }
+    *[soundfile] {
+        @media (min-width:$mob) {
+            @include span(6);
+        }
+    }
+    #colorgrid {
+        padding: 0;
+        overflow: auto;
+        margin: 0 auto;
+        position: relative;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        @include rounded(3px);
+        @include padding();
+        font-size: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+    #colorblock,
+    #nocolor, .nospectrum {
+        position: relative;
+        cursor: pointer;
+        border: 0 solid $background;
+        @include padding();
+        width: 25%;
+        display: inline-block;
+        margin: 0;
+        height: 20%;
+        &:after {
+            content: "";
+            position: absolute;
+            @include padding();
+            @include transition(0.05s);
+        }
+        &:hover:after {
+            border: 0 solid $background;
+        }
+        &:nth-child(4n) {
+            margin-right: 0;
+        }
+        span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow:hidden;
+            i {
+                position:absolute;
+                left:50%;
+                top:50%;
+                margin-top:-25px;
+                margin-left:-25px;
+                height:50px;
+                width:50px;
+                @include transition(0.1s);
+                @include rounded(3px);
+                @media (max-width:500px){
+                    margin-top:-15px;
+                    margin-left:-15px;
+                    height:30px;
+                    width:30px;
+                }
+                @media (max-height:500px){
+                    margin-top:-15px;
+                    margin-left:-15px;
+                    height:30px;
+                    width:30px;
+                }
+            }
+            &:hover {
+                i {
+                    margin-top:-28px;
+                    margin-left:-28px;
+                    height:56px;
+                    width:56px;
+                    @media (max-width:500px){
+                        margin-top:-18px;
+                        margin-left:-18px;
+                        height:36px;
+                        width:36px;
+                    }
+                    @media (max-height:500px){
+                        margin-top:-18px;
+                        margin-left:-18px;
+                        height:36px;
+                        width:36px;
+                    }
+                }
+            }
+        }
+    }
+    #nocolor, .nospectrum {
+        width: 100%;
+        font-size: 13px;
+        text-align: center;
+        position: relative;
+        text-align: center;
+        margin: 0 auto;
+        display: table;
+        border-collapse: collapse;
+        @include padding();
+        div {
+            display: table-cell;
+            vertical-align: middle;
+            @include padding();
+            span {
+                background: $background2;
+                background: url('images/nocolor_1.png') repeat left top;
+                border:1px solid #ccc;
+                color: rgba(0,0,0,0.5);
+                padding: 0.5em 2em;
+                display: inline;
+                position: relative;
+                width: auto;
+                margin: 0 auto;
+                letter-spacing: 0.1em;
+                font-weight: 400;
+                @include rounded(3px);
+                @include transition(0.1s);
+            }
+        }
+        &:hover {
+            div span {
+                color: $text;
+                // padding: 1em 2em;
+            }
+        }
+    }
+    #nocolor.nospectrum {
+        position:absolute;
+        width:100%;
+        height:15%;
+        text-align:center;
+        // background:$background;
+        top:85%;
+        z-index:9999;
+        display:table;
+        > div {
+            display:table-cell;
+            vertical-align: middle;
+            span {
+
+            }
+        }
+    }
+    #spectrum {
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:$background2;
+        @include rounded(5px);
+        &.hide {
+            display:block;
+        }
+        &.show {
+            display:none;
+        }
+    }
+    *[hue] {
+        position:absolute;
+        left:0;
+        top:0;
+        height:100%;
+        width:100%;
+        overflow:visible;
+        // background:$text;
+        // border:1em solid $text;
+        @include padding();
+        @include select();
+        @include media('frame'){
+            @include rounded(5px);
+        }
+        #hue {
+            position:absolute;
+            top:0;
+            width:100%;
+            height:70%;
+            @include rounded(3px);
+            overflow:visible;
+            border:$border;
+            @include padding();
+            cursor:crosshair;
+            #img {
+                position:absolute;
+                left:0;
+                top:0;
+                width:100%;
+                height:100%;
+                background:url('images/hue.png') repeat-x center;
+                background-size:100% 100%;
+            }
+            #handle {
+                position:absolute;
+                width:5px;
+                height:5px;
+                left:50%;
+                top:50%;
+                border:3px solid $text;
+                margin-top:-4.5px;
+                margin-left:-4.5px;
+                @include rounded(100%);
+            }
+            @media (orientation:portrait){
+                border-width:0 0 1px 0;
+                @include rounded(0);
+            }
+        }
+        #lightness {
+            position:absolute;
+            width:100%;
+            height:10%;
+            bottom:15%;
+            background: $background;
+            // border:$border;
+            overflow:visible;
+            cursor:col-resize;
+            @include padding();
+            @include rounded(3px);
+            #donker, #licht {
+                position:absolute;
+                top:0;
+                right:0;
+                font-size:10px;
+                color:rgba($text,0.8);
+                line-height:1em;
+                letter-spacing:0.1em;
+            }
+            #donker {
+                left:0;
+                right:auto;
+            }
+            &:after {
+                content:" ";
+                position:absolute;
+                top:50%;
+                left:0;
+                width:100%;
+                border-top:2px solid rgba($text,0.8);
+            }
+            #handle {
+                position:absolute;
+                top:0;
+                height:100%;
+                left:50%;
+                background:$text;
+                width:5px;
+                @include rounded(5px);
+
+            }
+            @media (orientation:portrait){
+                max-width:80%;
+                left:10%;
+            }
+        }
+        #nocolor {
+            position:absolute;
+            width:100%;
+            height:10%;
+            top:auto;
+            bottom:1px;
+            display:table;
+            @include padding();
+            > div {
+                display:table-cell;
+                height:100%;
+                width:100%;
+                // margin:0 auto;
+                width:100%;
+                text-align:center;
+                @include padding();
+                span {
+                    @include padding();
+                }
+            }
+        }
+        @media (orientation:portrait){
+            // border-bottom:$border;
+            @include rounded(0);
+        }
+    }
+    label {
+        font-size: 0.5em;
+    }
+    @media (max-width:$framewidth) {
+        @media (max-height:$frameheight) {
+            height: 100%;
+            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            display: block;
+            margin: 0;
+            top: 0;
+            left: 0;
+            #bottom {
+                position: absolute;
+                width: 100%;
+                min-width: 100%;
+                top: auto;
+                bottom: 0;
+            }
+        }
+        @media (max-width:$framewidth) {
+            max-height: 100%;
+        }
+        @media (max-height:$frameheight) {
+            max-width: 100%;
+        }
+    }
+    @media screen and (orientation:landscape) {
+        button[nextslide] {
+            margin: 0 auto;
+            width: auto;
+            padding: 0.5em 2em;
+        }
+        #left,
+        #right {
+            position: absolute;
+            width: 50%;
+            padding: 0;
+            height: 80%;
+            overflow: hidden;
+            @include rounded(5px);
+            @include padding();
+        }
+        *[letter],
+        *[soundfile] #play {
+            font-size: 80px;
+        }
+        #bottom {
+            height: 5em;
+            padding: 1em 0;
+            clear: both;
+            float: none;
+        }
+    }
+    &[color='palet'] {
+        #spectrum {
+            display: none !important;
+        }
+        #hue {
+            display: none !important;
+        }
+    }
+    &[color='sound'] {
+        #colorgrid {
+            display: none !important;
+        }
+        #spectrum {
+            display: none !important;
+        }
+    }
+
+    &[color='picker'] {
+        #colorgrid {
+            display: none;
+        }
+        #spectrum {
+            display: none !important;
+        }
+    }
+    #bottom {
+        span {
+            // display:none;
+        }
+    }
+    &[color='picker'] {
+        @media (orientation:portrait){
+            #left {
+                height:20% !important;
+            }
+            #right {
+                top:20% !important;
+                height:60% !important;
+            }
+            #bottom {
+                // border-top:$border;
+            }
+        }
+    }
+}
+/* ----------------- objects ----------------- */
+*[slides] button,
+*[next],
+*[help],
+*[intro] {
+    outline-style: none;
+    border: 0;
+    display: block;
+    margin: 1em auto;
+    background: #ccc;
+    color: $background;
+    // @include shadow(0,1.5px,0,rgba(0,0,0,0.3));
+    @include rounded(3px);
+    padding: 0.5em 1em;
+    min-width: 80px;
+    &:after,
+    &:before {
+        display: none;
+    }
+    &:hover {
+        background: $support1;
+        color: #fff;
+    }
+}
+*[next] {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    letter-spacing: 0.2em;
+    font-weight: 100;
+    text-transform: lowercase;
+    font-size: 1em;
+    @include transition(0.1s);
+    border-bottom: 5px solid transparent;
+    background: transparent;
+    color: $text;
+    @media (max-width:400px){
+        font-size:13px;
+    }
+    &:hover {
+        background: #fff;
+        color: $text;
+    }
+    i {
+        position: absolute;
+        right: 40px;
+        top: 50%;
+        margin-top: -10px;
+        height: 20px;
+        width: 20px;
+        @include right(20,2px,$text);
+    }
+    &.disabled {
+        opacity: 0.3;
+        &:hover {
+            background: transparent;
+        }
+    }
+}
+*[choose] {
+    display: block;
+    text-align: center;
+    color:$text;
+    font-weight:400;
+    line-height:1.3em;
+    font-size:1.2em;
+    display:table;
+    border-collapse:separate;
+    border-spacing:0.5em;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    @include padding();
+    &:hover {
+        color:$text;
+    }
+    div {
+        display:table-cell;
+        vertical-align:middle;
+        width:50%;
+        padding:0;
+        cursor: pointer;
+        background:rgba(0,0,0,0.05);
+        @include rounded(5px);
+        @include padding();
+        &:hover {
+            background: $support1;
+            color:#fff;
+        }
+        &.selected {
+            background: $support2;
+            color: #fff;
+        }
+    }
+    &#nofloat div {
+        display: block;
+        float: left;
+        clear: both;
+    }
+    &.three {
+        div {
+            width:33%;
+            &:nth-child(2){
+                left:33%;
+            }
+            &:nth-child(3){
+                left:66%;
+            }
+        }
+    }
+}
+*[soundfile] {
+    margin: 10px auto;
+    width: 300px;
+    display: block;
+    overflow: hidden;
+    #play {
+        width: 200px;
+        height: 200px;
+        // @include rounded(50%);
+        border: 0;
+        outline-style: none;
+        @include transition(0.05s);
+        -webkit-tap-highlight-color: transparent;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        font-size: 4em;
+        margin: 0 auto;
+        display: block;
+        background: url("images/play_555.png") no-repeat center;
+        background-size: 80%;
+        cursor: pointer;
+        .touch & {
+            background-image: url("images/play_sp1.png");
+        }
+        &:hover {
+            background-image: url("images/play_sp1.png");
+        }
+        &.playing {
+            background-image: url("images/pause_555.png");
+            &:hover {
+                background-image: url("images/pause_sp1.png");
+            }
+        }
+        &.stopped:hover {
+
+        }
+    }
+}
+
+/* ----------------- klank en betekenis (japans) ----------------- */
+
+#frame {
+    *[japans]{
+        height:100%;
+    }
+    .top75 {
+        height:75% !important;
+        font-size:40px;
+        text-align:center;
+        width:100%;
+        display:table !important;
+        *[soundfile]{
+            display:table-cell;
+            #play {
+                background-size:200px;
+            }
+        }
+        #word {
+            display:table-cell;
+            vertical-align: middle;
+            font-weight:400;
+        }
+        *[soundfile]{
+            height:100%;
+            #play {
+                width:100%;
+                height:100%;
+            }
+        }
+    }
+    .bottom25 {
+        height:25% !important;
+        max-height:8em;
+        border:1em solid transparent;
+        border-width:0 1em 1em 1em;
+        @include transition(0.1s);
+        *[next] {
+            letter-spacing:0.1em !important;
+            i { display:none;}
+        }
+        @media (max-width:$framewidth){
+            border:5px;
+            font-size:0.8em;
+        }
+    }
+    &.move {
+        @include transition(0.1);
+        #bottom {
+            -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+        }
+    }
+}
+
+/* ----------------- dagen vd week // maanden ----------------- */
+
+
+*[word]{
+    *[letter]{
+        font-size:1em;
+        width:80%;
+        left:10%;
+        margin-left:0;
+        line-height:3em;
+        height:3em;
+        margin-top:-1.5em;
+        @media (min-width:$framewidth){
+            font-size:2em;
+        }
+    }
+}
+
+
+/* ----------------- klank en vorm ----------------- */
+
+*[klankenvorm] {
+    #left, #right {
+        opacity:0.75;
+        cursor:pointer;
+        height:70%;
+        border:1em solid $background;
+        background-size:auto 70% !important;
+        i {display:none;}
+        &:hover {
+            opacity:1;
+            background-color:transparent;
+        }
+    }
+    #left {
+        border-right-width:0.5em;
+        @include media('<mobile'){
+            h1 {
+                font-size:1.2em;
+            }
+        }
+    }
+    #right {
+        border-left-width:0.5em;
+    }
+    @media ('orientation:portrait'){
+        #left {
+            border-width:1em 1em 0.5em 1em;
+        }
+        #right {
+            border-width:.5em 1em 1em 1em;
+        }
+    }
+    #bottom {
+        height:30%;
+        position:absolute;
+        button {
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            border:0;
+            background:$background;
+            outline-style:none;
+            #play {
+                height:100%;
+                width:100%;
+                background-size:auto 70%;
+            }
+        }
+    }
+    @media (orientation:portrait){
+        #left, #right {
+            height:30%;
+        }
+        #right {
+            top:30%;
+        }
+    }
+}
+
+*[testsound]{
+    h3 {
+        span {
+            margin-top:1em;
+            display:inline-block;
+            font-size:13px;
+            font-weight:300;
+            color:$grijs;
+            line-height:1.5em;
+            letter-spacing:0.1em;
+        }
+    }
+    #left, #right {
+        height:80%;
+        @media (orientation:portrait){
+            height:40%;
+        }
+    }
+    #left {
+        display:table;
+        > * {
+            display:table-cell;
+            vertical-align: middle;
+            line-height:1.5em;
+            font-weight:400;
+            padding:1em;
+            font-size:1.5em;
+        }
+    }
+    #right {
+        *[soundfile]{
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:150px;
+            height:150px;
+            margin-left:-75px;
+            margin-top:-75px;
+            #play {
+                width:100%;
+                height:100%;
+            }
+        }
+    }
+    #nosound {
+        position:absolute;
+        top:0;
+        left:0;
+        background:$background;
+        height:100%;
+        width:100%;
+        z-index:999;
+        @include padding();
+        padding:100px;
+        text-align:center;
+        div {
+            margin:0 auto;
+            max-width:400px;
+        }
+    }
+    #bottom {
+        height:20% !important;
+    }
+}
