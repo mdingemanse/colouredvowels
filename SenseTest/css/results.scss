@@ -1,0 +1,619 @@
+#results {
+    text-align:center;
+    @media (max-width:$mob+100px){
+        border-top:60px solid transparent;
+    }
+    h1 {
+        font-size:1.5em;
+    }
+    #icon {
+        display:block;
+        width:150px;
+        height:150px;
+        margin:1em auto;
+        background-position:center;
+        background-repeat: no-repeat;
+        background-size:80%;
+    }
+    #info {
+        display:block;
+        font-size:15px;
+        padding:1em 2em;
+        @include padding();
+        max-width:600px;
+        margin:0 auto;
+    }
+    #social {
+        width:150px;
+        margin:0em auto;
+        padding:0.5em 1em;
+        @include rounded(10px);
+        line-height:1.5em;
+        a {
+            // opacity:0.75;
+            &:hover {
+                // opacity:1;
+            }
+        }
+        span {
+            color:$text;
+            font-weight:500;
+            font-size:11px;
+        }
+    }
+    #wow {
+        background:rgba(#ffe,0.8);
+        border:1px solid rgba(0,0,0,0.2);
+        padding:2em;
+    }
+    #left, #right {
+        @include padding();
+    }
+    #left {
+        background:$background;
+        border:1px solid rgba($support2,0.1);
+        padding-bottom:3em;
+    }
+    #right {
+        // padding:2em;
+        border:1px solid rgba(#ffde64,0.1);
+        background:rgba(#ffde64,0.3);
+        @include background();
+        form#profile {
+            border:1px solid rgba($support2,0.2);
+            margin:1em 0;
+            button {
+                margin:0 auto;
+            }
+        }
+    }
+
+    #nogeen {
+        font-size:15px;
+        a {
+            &:after, &:before {
+                display:block;
+            }
+            &:before {
+                border-color:$support2;
+            }
+        }
+    }
+
+    #bottom {
+        font-size:.8em;
+        padding:2em 0;
+        float:left;
+        margin:0 0 4em 0;
+        width:100%;
+        @include media('framem'){
+            background:$background;
+        }
+        &:before {
+            content:" ";
+            clear:both;
+            float:none;
+            width:100%;
+            overflow:auto;
+            display:block;
+        }
+        a {
+            color:$grijs;
+            &:after, &:before {
+                display:none;
+            }
+            &:hover {
+                color:$support1;
+            }
+        }
+    }
+    *[percentage]:hover ~ button {
+        border-bottom:2px solid $support1;
+    }
+    button {
+        // background:$grijs;
+        background:transparent;
+        color:$support1;
+        padding:0.2em 0;
+        border:0;
+        outline-style:none;
+        @include rounded(0);
+        @include transition(0.1s);
+        &:hover {
+            border-bottom:2px solid $support1;
+        }
+    }
+    @media (min-width:$mid){
+        #mid {
+            font-size:0;
+            text-align:center;
+            border:$border;
+            border-width: 0 0 0 0;
+            padding:0 0;
+            // @include background2();
+            position:relative;
+            min-height:500px;
+            #close {
+                display:none;
+                position:absolute;
+                right:0;
+                top:0;
+                width:30px;
+                height:30px;
+                cursor:pointer;
+                margin:20px;
+                @include cross(2px,#555,30px);
+                &:hover {
+                    @include cross(2px,#000,30px);
+                }
+            }
+        }
+        #left, #right {
+            display:inline-block;
+            font-size:15px;
+            // @include rounded(5px);
+            vertical-align:top;
+            border:0;
+            // border-right:$border;
+            background:transparent;
+        }
+        #left {
+            width:45%;
+            // float:none;
+            margin:0 auto;
+        }
+        #right {
+            width:45%;
+            margin:2em auto;
+            border-right:0;
+            // @include span(6 of 12 last);
+        }
+    }
+}
+
+#symbol_results {
+    padding: 10px;
+    @include padding();
+    overflow:auto;
+    text-align:center;
+    max-width:600px;
+    border:$border;
+    margin:0 auto;
+    hr {
+        float:clear;
+        width:100%;
+        overflow:hidden;
+        border-top:$border;
+        margin:2em 0;
+    }
+}
+
+#japans_results {
+    padding:$margin;
+    @include padding();
+    #items {
+
+        #item {
+            float:left;
+            width:150px;
+            height:auto;
+            border:1px solid rgba(0,0,0,0.1);
+            background:#fff;
+            margin: 0 1em 1em 0;
+            text-align:center;
+            padding: 1em 0.5em;
+            @include padding();
+            @include span(2 of 12);
+            &:nth-child(6n+1){
+                @include span(2 of 12 last);
+            }
+            &.true {
+                color:#0f0;
+            }
+            i, span {
+                display:block;
+            }
+            .bold {
+                font-weight:bold;
+            }
+        }
+    }
+}
+
+#geluidenkleur_results {
+    #item {
+        display:inline-block;
+        margin:1em;
+        #symbol {
+            width:50px;
+            height:50px;
+            display:inline-block;
+            @include rounded(5px);
+            &:after {
+
+            }
+        }
+    }
+}
+
+#result {
+    background:#fff;
+    margin-bottom:1px;
+    @include rounded(0.3em);
+    label {
+        display:block;
+        text-align:center;
+        line-height:3em;
+        font-size:11px;
+    }
+}
+
+#perc {
+    width:80%;
+    max-width:300px;
+    height: 30px;
+    position:relative;
+    display:block;
+    margin:2em auto;
+    border:5px solid rgba($support2,0.3);
+
+    width:100px;
+    height:100px;
+    @include rounded(100%);
+    line-height:100px;
+    background:rgba($support1,0.75);
+    cursor:pointer;
+    span {
+        color:#fff;
+        position:relative;
+        margin:0;
+        padding:0;
+        display:inline-block;
+        line-height:1em;
+        background:transparent;
+        font-size:25px;
+        font-weight:100;
+        vertical-align: middle;
+        @include transition(0.1s);
+    }
+    #bar {
+        display:none;
+    }
+    &:hover {
+        span {
+            font-size:30px;
+        }
+    }
+}
+
+*[colorhue] {
+    #hue {
+        width:400px;
+        height:20px;
+        display:inline-block;
+        position:relative;
+        right:auto;
+        left:auto;
+        overflow:visible;
+        border:$border;
+        #bg {
+            position:absolute;
+            display:block;
+            left:auto;
+            top:auto;
+            bottom:auto;
+            right:auto;
+            height:2000%;
+            width:5%;
+            @include rotation(-90deg);
+            transform-origin: 0 20px;
+            margin-left:20px;
+            border:0;
+        }
+        #letter {
+            @include padding();
+            position:absolute;
+            left:0;
+            top:0;
+            margin:0;
+            padding:0;
+            height:100%;
+            width:5px;
+            border-color:#fff;
+            border-width:3px 0 0 1px;
+            border-style:solid;
+            i {
+                display:none;
+                font-style:normal;
+            }
+        }
+    }
+}
+
+*[colorpos]{
+    width:20em;
+    height:20em;
+    display:inline-block;
+    position:relative;
+    border:$border;
+    background:rgba(255,255,255,0.8);
+    #in {
+        position:absolute;
+        @include padding();
+        border:2em solid transparent;
+        margin:0;
+        width:100%;
+        height:100%;
+    }
+    #letter {
+        position:absolute;
+        left:0;
+        top:0;
+        font-size:1em;
+        opacity:0.9;
+        overflow:visible;
+        // @include blur(1px);
+        i {
+            position:absolute;
+            left:50%;
+            right:50%;
+            width:20px;
+            height:20px;
+            margin-left:-1em;
+            margin-top:-1em;
+            text-align:center;
+            font-weight:500;
+            color:transparent;
+            // background:#fff;
+            @include rounded(50%);
+            line-height:2em;
+            font-size:0.8em;
+            font-style:normal;
+        }
+    }
+}
+
+*[colorbar]{
+    padding:.5em;
+    #in {
+        width:400px;
+        height:20px;
+        position:relative;
+        background:#eee;
+        margin:0 auto 1em auto;
+        #letter {
+            position:relative;
+            width:100%;
+            height:100%;
+            float:left;
+            i {
+                position:absolute;
+                top:0;
+                left:0;
+                height:100%;
+                width:100%;
+                color:transparent;
+            }
+        }
+    }
+}
+
+*[symbols]{
+    text-align:center;
+    padding:1em;
+    #in {
+        position:relative;
+        font-size:0.5em;
+        #letter {
+            position:relative;
+            width:4em;
+            height:4em;
+            padding:0;
+            line-height:2em;
+            text-align:center;
+            display:inline-block;
+            margin:.2em;
+            @include rounded(0.3em);
+            border:$border;
+            @include padding();
+            line-height:4em;
+            i {
+                position:absolute;
+                left:50%;
+                top:50%;
+                display:block;
+                margin-left:-1em;
+                margin-top:-1em;
+                font-style:normal;
+                background:$background;
+                width:2em;
+                height:2em;
+                line-height:2em;
+                font-weight:400;
+                @include rounded(0.3em);
+            }
+        }
+    }
+}
+
+#itemscore {
+    position:relative;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    overflow:auto;
+    z-index:99;
+    margin-top:2em;
+    margin-bottom:4em;
+    padding:0;
+    height:0;
+    font-size:11px;
+    @include transition(0.1s);
+    @include padding();
+    &.open {
+        padding: 0;
+        height:auto;
+        background:$background;
+    }
+    #mid {
+        max-width:auto;
+        margin:4em auto;
+        @include padding();
+        padding:1em !important;
+        font-size:0;
+        text-align:center;
+        @media (min-width:$mid){
+
+        }
+    }
+    #letter {
+        // clear:both;
+        overflow:auto;
+        font-size:15px;
+        margin-bottom:0em;
+        text-align:center;
+        float:none;
+        display:inline-block;
+        @include padding();
+        border:20px solid transparent;
+        &:after {
+            display:block;
+        }
+        #symbol {
+            width:auto;
+            // min-width:2.5em;
+            padding:0 0;
+            border:0;
+            text-align:center;
+            display:block;
+            font-size:1.5em;
+            line-height: 3em;
+            font-weight: 400;
+            @include transition(0.2s);
+            *[soundfile]{
+                width:100%;
+                height:50px;
+                #play {
+                    width:100%;
+                    height:100%;
+                    background-size: auto 80%;
+                }
+            }
+        }
+        #color {
+            width:1em;
+            height:1em;
+            line-height:2.5em;
+            margin-right:0.2em;
+            margin-bottom:0.2em;
+            padding:0;
+            font-weight:400;
+            background:$background;
+            border:$border;
+            text-align:center;
+            @include rounded(100%);
+            @include padding();
+            display:inline-block;
+        }
+        #distance {
+            position:relative;
+            width:100%;
+            height:5px;
+            text-align:left;
+            font-size:0.8em;
+            float:left;
+            @include padding();
+            @include rounded(3px);
+            #bar {
+                @include padding();
+                background:$background2;
+                height:100%;
+                width:100%;
+                position:absolute;
+                left:0;
+                top:0;
+                padding:0;
+                line-height:1em;
+                font-size:0;
+                margin:0;
+                @include rounded(3px);
+                > div {
+                    position:relative;
+                    left:0;
+                    top:0;
+                    height:100%;
+                    background:$support1;
+                    color:$support1;
+                    display:block;
+                    float:left;
+                    overflow:hidden;
+                    line-height:2.5em;
+                    padding:0;
+                    margin:0;
+                    font-size:11px;
+                    // border-right:1px solid $support1;
+                    @include padding();
+                    @include rounded(3px 0 0 3px);
+                    &:nth-child(1){ background:rgba($support1,0.6); }
+                    &:nth-child(2){ background:rgba($support1,0.6); }
+                    &:nth-child(3){ background:rgba($support1,0.6); }
+                    span {
+                        position:absolute;
+                        left:0;
+                        top:0;
+                        padding:0 1em;
+                        border-left:1px solid $support1;
+                    }
+                }
+            }
+        }
+        @media (min-width:$mid){
+            &.symbols {
+                @include span(2 of 12);
+                display:inline-block;
+                float:none;
+                &:nth-child(6n){
+                    @include span(2 of 12 last);
+                    display:inline-block;
+                    float:none;
+                }
+                #symbol {
+                    font-size:3em;
+                    line-height:1.5em;
+                }
+            }
+            &.names {
+                @include span(3 of 12);
+                display:inline-block;
+                float:none;
+                &:nth-child(4n){
+                    @include span(3 of 12 last);
+                    display:inline-block;
+                    float:none;
+                }
+            }
+            &.sounds {
+                @include span(3 of 12);
+                display:inline-block;
+                float:none;
+                &:nth-child(3n){
+                    @include span(3 of 12 last);
+                    display:inline-block;
+                    float:none;
+                }
+            }
+        }
+    }
+    @media (min-width:$mid){
+        border:$border;
+        @include rounded(5px);
+        #mid {
+            border:$border;
+            background:$background;
+            padding:4em;
+            @include rounded(5px);
+            border:40px solid transparent;
+        }
+    }
+}

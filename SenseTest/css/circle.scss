@@ -1,0 +1,50 @@
+@mixin circle($w,$b,$f) {
+
+	width: $w;
+    height: $w;
+	position:relative;
+	.prec {
+		position:absolute;
+	    top: 50%;
+		left: 0;
+		width:100%;
+		text-align:center;
+		margin-top:0;
+	    font-size: ($w*$f);
+		line-height:0;
+		color:$support1;
+		font-weight:400;
+	}
+	.circle {
+	    position: relative;
+	    top: ($w*$b);
+	    left: ($w*$b);
+	    text-align: center;
+	    width: $w - (($w*$b)*2);
+	    height: $w - (($w*$b)*2);
+	    background-color: #fff;
+		background:rgba(255,255,255,0.5);
+		@include rounded(100%);
+	}
+
+	.active-border{
+	    position: relative;
+	    text-align: center;
+	    width: $w;
+	    height: $w;
+		@include rounded(10%);
+
+	    background-color:$support1;
+	    background-image:
+	        linear-gradient(91deg, $support1 50%, #ccc 50%),
+	        linear-gradient(90deg, #ccc 50%, $support1 50%);
+
+	}
+
+}
+
+.circ{
+	@include circle(150px,0.1,0.15);
+	margin: 20px auto;
+	display:block;
+}

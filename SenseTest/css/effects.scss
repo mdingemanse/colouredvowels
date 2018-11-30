@@ -1,0 +1,275 @@
+*[loading] {
+    width: 50px;
+    margin: 300px auto 0;
+    height: 3px;
+    position: relative;
+    i {
+        background: #555;
+        @include rounded(3px);
+        width: 3px;
+        height: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        @include transition(0.2s);
+        &.active {
+            background: $support1;
+        }
+    }
+}
+*[progress] {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    height: 4px;
+    z-index:1000;
+    #bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+        background: $text;
+        @include transition(0.3s);
+    }
+    span {
+        display: none;
+        color: rgba(255,255,255,0.8);
+        letter-spacing: 0.1em;
+        font-size: 9px;
+        line-height: 16px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 0 1em;
+        margin: 2px;
+        background: rgba(0,0,0,0.5);
+        @include rounded(3px);
+    }
+}
+*[popup] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 9999;
+    #bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        overflow: auto;
+        background: rgba(#fff,0);
+        @include transition(0.1s);
+        &.open {
+            height: 100%;
+            background: rgba(#eee,.9);
+        }
+        #window {
+            width: auto;
+            max-width: 550px;
+            margin: 0.5em;
+            padding: 4em 1em 2em;
+            min-height: 150px;
+            background: #fff;
+            text-align: center;
+            border-bottom: 3px solid rgba($grijs,0.5);
+            @include padding();
+            line-height: 2em;
+            font-size: 1.1em;
+            label {
+                display: block;
+                font-size: 0.9em;
+                font-weight: 300;
+                margin-top: 1em;
+                letter-spacing: 0;
+            }
+            #buttons {
+                padding: 2em 1em;
+                font-size: 0.9em;
+                button {
+                    background: transparent;
+                    border: $border;
+                    @include rounded(5px);
+                    min-width: 150px;
+                    margin: 0 0.2em 1em;
+                    display: inline-block;
+                    text-align: center;
+                    padding: 0.5em 2em;
+                    // @include span(4);
+                    float: none;
+                    outline-style: none;
+                    &.active {
+                        background: rgba($support2,0.7);
+                        color: #fff;
+                    }
+                }
+            }
+            @media (min-width:$mob) {
+                padding: 4em 4em 2em;
+                margin: 100px auto;
+            }
+        }
+    }
+}
+*[drop] {
+    width: 100%;
+    height: 2em;
+    border: $border;
+    overflow: visible;
+    padding: 0 0.5em;
+    position: relative;
+    cursor: pointer;
+    @include rounded(3px);
+    @include padding();
+    > i {
+        position: absolute;
+        height: 2em;
+        width: 2em;
+        right: 0;
+        top: -1px;
+        background: url("images/dropdown_sp2.png") no-repeat;
+        background-size: 1em;
+        background-position: 10px;
+        opacity: 0.3;
+        @include transition(0.2s);
+    }
+    &:hover {
+        i {
+            opacity: 1;
+        }
+    }
+    #selected {
+        height: 2em;
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 400;
+        @include padding();
+    }
+    #dropdown {
+        position: absolute;
+        top: 2em;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        display: none;
+        z-index: 9;
+        cursor: pointer;
+        @include rounded(3px);
+        margin-top: 0;
+        @include shadow(0,2px,2px,rgba(0,0,0,0.2));
+        &.open {
+            display: block;
+        }
+        #option {
+            padding: 0.5em;
+            line-height: 1.2em;
+            text-align: left;
+            &:hover {
+                background: $background;
+                color: $support2;
+            }
+        }
+    }
+}
+#facebook,
+#twitter {
+    display: inline-block;
+    width: 3em;
+    height: 2em;
+    margin-top: 1em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    &:after,
+    &:before {
+        display: none;
+    }
+}
+#facebook {
+    background-image: url("images/facebook_555.png");
+    &:hover {
+        background-image: url("images/facebook_sp1.png");
+    }
+}
+#twitter {
+    background-image: url("images/twitter_555.png");
+    &:hover {
+        background-image: url("images/twitter_sp1.png");
+    }
+}
+
+
+
+.loader {
+  font-size: 10px;
+  margin: 5em auto;
+  text-indent: -9999em;
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  background: $text;
+  background: -moz-linear-gradient(left, $text 10%, rgba(255, 255, 255, 0) 42%);
+  background: -webkit-linear-gradient(left, $text 10%, rgba(255, 255, 255, 0) 42%);
+  background: -o-linear-gradient(left, $text 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(left, $text 10%, rgba(255, 255, 255, 0) 42%);
+  background: linear-gradient(to right, $text 10%, rgba(255, 255, 255, 0) 42%);
+  position: relative;
+  .hide & {
+      display:none;
+  }
+  -webkit-animation: load3 1s infinite linear;
+  animation: load3 1s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.loader:before {
+  width: 50%;
+  height: 50%;
+  background: $text;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+.loader:after {
+  background: $background;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

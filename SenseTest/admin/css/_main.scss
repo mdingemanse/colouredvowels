@@ -1,0 +1,285 @@
+@import '../../css/_main.scss';
+
+$susy: ( columns: 8, gutters: 0, math: fluid, output: float, gutter-position: inside, clearfix:true, );
+// globals
+$bg: #fafafa;
+$b0: rgba(0,0,0,0.05);
+$b1: rgba(0,0,0,0.5);
+$b2: rgba(0,0,0,0.25);
+$a1: rgba(255,255,255,0.5);
+// ---------------------------
+body,
+html {
+    font-family: Roboto;
+    background: $background;
+    letter-spacing: 0.1em;
+    overflow:auto;
+}
+body {
+    // @include gr($bg,#eee,$bg);
+    background-repeat: no-repeat;
+}
+logo {
+    display: inline-block;
+    width: 100%;
+    height: 80px;
+    right:0;
+    background: url("../../css/images/logok-zw.png") no-repeat 20px;
+    opacity:0.5;
+    background-size: auto 40%;
+}
+#nodb {
+    position:fixed;
+    background: $bg;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index:9;
+    padding: 1em;
+}
+#container {
+    position:absolute;
+    left:0;
+    top:0;
+    // @include container(800px);
+    padding: 0;
+    width:100%;
+    float:left;
+    height:100%;
+}
+#main {
+    @include container();
+    #menu {
+        @include span(2 of 8);
+        max-width:300px;
+        background:#222;
+        position:fixed;
+        float:left;
+        height:100%;
+    }
+    #results {
+        @include padding();
+        padding:20px;
+        @include push(2 of 8);
+        @include span(6 of 8);
+        max-width:600px;
+        text-align:left;
+        h1 {
+            text-align:center;
+        }
+        // background:#ccc;
+    }
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight:300;
+    margin:0.5 0em;
+}
+
+.table {
+    line-height:1.5em;
+    border-bottom:1px solid $b0;
+    margin-top:1em;
+    background:$a1;
+    padding:1em;
+    font-size:13px;
+    width:100%;
+    overflow:auto;
+    button {
+        float:right;
+    }
+    h4 {
+        margin-top:0em;
+        margin-bottom:0.5em;
+    }
+    #buttons {
+        margin-bottom:1em;
+    }
+    span {
+        font-weight:bold;
+    }
+    &.unused {
+        opacity:0.3;
+    }
+    label {
+        display:inline;
+    }
+}
+
+#results button {
+    outline-style:none;
+    // border:0;
+    background:$support1;
+    color:#fff;
+    padding:1em 2em;
+    letter-spacing: 0.1em;
+    cursor:pointer;
+    margin: 0 auto;
+    display:block;
+    position:relative;
+    &:hover {
+        background:$support2;
+        border:0;
+    }
+    &:after {
+        content:" ";
+        position:absolute;
+        width:0%;
+        height:3px;
+        bottom:0px;
+        background:#fff;
+        left:0;
+        @include transition(0s);
+    }
+    &.loading {
+        opacity:0.3;
+        &:after {
+            width:100%;
+            @include transition(.5s);
+        }
+    }
+}
+
+code {
+    display:block;
+    background:rgba(0,0,0,0.05);
+    padding:1em;
+    font-size:0.8em;
+    @include span(6 of 12 );
+    span {
+        font-weight:bold;
+    }
+}
+
+table {
+    font-size:11px;
+    background:#fff;
+    border-collapse:none;
+    th, td {
+        min-width:150px;
+        padding:0.2em 0.5em;
+        line-height:2em;
+    }
+    th {
+        background:rgba(0,0,0,0.05);
+    }
+}
+#menu {
+    color:rgba($bg,0.7);
+    h1 {
+        padding:0.5em 1em;
+        font-size:1.4em;
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        font-size:0.8em;
+        margin: 0;
+        a {
+            display: block;
+            margin-bottom: 2px;
+            line-height: 2.5em;
+            padding: 0.5em 2em;
+            text-decoration: none;
+            color: rgba($bg,0.5);
+            outline-style: none;
+            font-weight:100;
+            &:hover {
+                background: rgba(#000,0.3);
+            }
+            &.NOW {
+                background:$b1;
+                color: rgba($bg,0.8);
+            }
+        }
+    }
+}
+
+#t {
+    #columns {
+        #toggle {
+            font-weight:100;
+            cursor:pointer;
+            &:before {
+                content:"show ";
+            }
+            &.open {
+                &:before {
+                    content:"hide ";
+                }
+                + #content {
+                    display:block;
+                }
+            }
+            &:hover {
+                font-weight:500;
+            }
+        }
+        #content {
+            margin-top:1em;
+            display:none;
+        }
+    }
+}
+
+label {
+    font-weight: 400;
+    color: $b1;
+    text-align:left;
+    font-size:13px;
+    margin:0;
+    max-width:100%;
+    width:auto;
+}
+success,
+error {
+    display: block;
+    @include rounded(5px);
+    border: 1px solid rgba(0,255,0,0.3);
+    background: rgba(0,255,0,0.1);
+    @include padding();
+    padding: 10px;
+    overflow:auto;
+    white-space: collapse;
+}
+error {
+    border: 1px solid rgba(255,0,0,0.3);
+    background: rgba(255,0,0,0.1);
+}
+.error {
+    color:#f00;
+}
+*[startstop] {
+    @include rounded(5px);
+    background: $b0;
+    display: inline-block;
+    padding: 0.3em 1em 0.5em;
+    cursor: pointer;
+    @include select();
+    span {
+        margin-right: 1em;
+    }
+    &:hover {
+        background: $a1;
+    }
+}
+
+pre {
+    background:rgba(0,0,0,0.03);
+    font-size:11px;
+    padding:1em;
+}
+
+#export {
+    text-align: left;
+    button {
+        display: block;
+        width: 100%;
+        padding: 1em 2em;
+        font-size: 1rem;
+    }
+}
