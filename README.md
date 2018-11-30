@@ -6,7 +6,7 @@ This repository accompanies the paper "Cross-modal associations and synaesthesia
 There are two parts to this repository:
 
 ## 1. Open data & code
-The data underlying the analyses reported in the paper, along with code for novel Mantel-based measure of structural isomorphism we introduce. See [BRM_colouredvowels_opendata.md](/BRM_colouredvowels_opendata.md) for details.
+The data underlying the analyses reported in the paper, including CIELuv based consistency scores and CIELab based structure scores for 1130 participants. Also includes the code for the novel Mantel-based measure of structural isomorphism in cross-modal mappings that we introduce in the paper. See [BRM_colouredvowels_opendata.md](/BRM_colouredvowels_opendata.md) for details.
 
 ## 2. Web application
 A distributable version of SenseTest, the web application we developed and used for this research. This includes an interface for devising simple cross-modal tasks and a colour picker optimised for research into synaesthesia and cross-modal associations. See [SenseTest](/SenseTest/README.md) for more details.
