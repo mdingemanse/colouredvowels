@@ -1,7 +1,9 @@
 # Coloured vowels — materials
-This repository accompanies the paper "Cross-modal associations and synaesthesia: Categorical perception and structure in vowel-colour mappings in a large online sample" by Cuskley<sup>1</sup>, Dingemanse<sup>1</sup>, Kirby and van Leeuwen.
+This dataset and code accompanies the following paper on categorical perception and structure in vowel-colour mappings:
 
-<sup>1</sup> Joint first authors.
+> Cuskley, C.<sup>1</sup>, Dingemanse, M.<sup>1</sup>, van Leeuwen, T. & Kirby, S. 2019. Cross-modal associations and synaesthesia: Categorical perception and structure in vowel-colour mappings in a large online sample. *Behaviour Research Methods*, doi: [10.3758/s13428-019-01203-7](https://doi.org/10.3758/s13428-019-01203-7).
+
+<sup>1</sup> Joint first authors & corresponding authors: ccuskley@gmail.com, m.dingemanse@let.ru.nl.
 
 There are two parts to this repository:
 

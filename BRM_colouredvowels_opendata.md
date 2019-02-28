@@ -1,14 +1,19 @@
-Coloured vowels open data
+Coloured vowels: open data and code
 ================
 
-This dataset and code accompanies the paper "Cross-modal associations and synaesthesia: Categorical perception and structure in vowel-colour mappings in a large online sample" by Cuskley<sup>1</sup>, Dingemanse<sup>1</sup>, Kirby and van Leeuwen.
+Intro
+-----
 
-<sup>1</sup> Joint first authors.
+This dataset and code accompanies the following paper on categorical perception and structure in vowel-colour mappings:
+
+> Cuskley, C.<sup>1</sup>, Dingemanse, M.<sup>1</sup>, van Leeuwen, T. & Kirby, S. 2019. Cross-modal associations and synaesthesia: Categorical perception and structure in vowel-colour mappings in a large online sample. *Behaviour Research Methods*, doi: [10.3758/s13428-019-01203-7](https://doi.org/10.3758/s13428-019-01203-7).
+
+<sup>1</sup> Joint first authors & corresponding authors: <ccuskley@gmail.com>, <m.dingemanse@let.ru.nl>.
 
 Data
 ----
 
-The data was collected in the framework of a large-scale study into synaesthesia and cross-modal associations (*Groot Nationaal Onderzoek*, Van Leeuwen & Dingemanse 2016). Spoken vowel-colour association data was collected for **1164 participants** using recordings of 16 vowel sounds selected to represent points spread through acoustic vowel space (Moos et al. 2014). Grapheme-colour association data was collected for a subset of 398 participants who took a full grapheme-colour association test, among them are around 100 confirmed synaesthetes.
+The data was collected as part of a large-scale study into synaesthesia and cross-modal associations (*Groot Nationaal Onderzoek*, Van Leeuwen & Dingemanse 2016). Spoken vowel-colour association data was collected for **1164 participants** using recordings of 16 vowel sounds selected to represent points spread through acoustic vowel space (Moos et al. 2014). Grapheme-colour association data was collected for a subset of 398 participants who took a full grapheme-colour association test, among them are around 100 confirmed synaesthetes.
 
 The focus of this paper is on colour associations to spoken vowel sounds. Data comes in the following data frames (shared in .csv and .Rdata formats): `d.voweldata` for the raw data from the association task (with `d.stimuli` recording order of presentation) and `d.participants` for anonymised participant metadata and consistency and structure scores.
 
@@ -59,4 +64,38 @@ The `anonid` allows linking across test results and metadata. Age and binarised 
 Code
 ----
 
-Finally, [BRM\_colouredvowels\_MantelCode.py](/BRM_colouredvowels_MantelCode.py) has the code for computing structure scores using the Mantel test.
+Part of our analysis is in Python. [BRM\_colouredvowels\_MantelCode.py](/BRM_colouredvowels_MantelCode.py) has the code for computing structure scores using the Mantel test.
+
+Also, if you're interested in the code for the online cross-modal association test, have a look at [SenseTest](/SenseTest).
+
+Sneak peek
+----------
+
+What does it look like when you ask people to associate colours to vowel sounds? Here are some samples from the data (more details in the paper).
+
+``` r
+library(ggrepel)
+library(cowplot)
+
+stims <- read_delim(file="BRM_colouredvowels_stimuli_properties.tsv",delim="\t") %>%
+  plyr::rename(c("File" = "item","VowelCat" = "phoneme","Graphcat" = "grapheme"))
+
+d.wide <- d.voweldata %>%
+  mutate(item = as.numeric(item)) %>% # drop leading zero
+  gather("trial","colour", starts_with("color")) %>%
+  mutate(trial = sapply(trial,gsub,pattern="color",replacement="")) %>% # keep only trial number
+  dplyr::select(anonid,item,trial,colour) %>%
+  arrange(item) %>%
+  left_join(stims) # add stim metadata for easy plotting
+
+source(file="BRM_colouredvowels_functions.R")
+
+plot.nonsyn <- vowelplot(pid="f999ef")
+plot.syn <- vowelplot(pid="4e6aad")
+
+plot_grid(plot.nonsyn, plot.syn, labels = c("A", "B"))
+```
+
+![](figs/examples-1.png)
+
+Colours chosen by a non-synaesthete (A) and a synaesthete (B) for 16 vowel sounds (each sound presented 3 times in total). While the synaesthete is more consistent in picking exactly the same colour for the same sound each time, both participants group sounds in terms of the vowel they belong to (for instance the three \[i:\]-like sounds, top left), and both structure their choices so that they pick lighter colours for \[i:\] than for \[u:\] (top right) and \[a:\] (bottom), revealing general principles underlying the associations.
