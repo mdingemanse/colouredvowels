@@ -90,7 +90,7 @@ vowelplot <- function(pid=NULL,saveplot=FALSE) {
 # If more than one pid is selected, plots will be faceted by pid.
 
   
-vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,annotate=F,saveplot=FALSE,keyword=NULL,printpid=T) {
+vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,sort=F,annotate=F,saveplot=FALSE,keyword=NULL,printpid=T) {
 
   # TO DO
   # add syn filter
@@ -103,12 +103,11 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     
     # if no pids are given, first filter data, then randomly select n pids
     dp <- d.full %>%
+#      filter(structure < max.structure,
+#             structure > min.structure) %>%
       filter(consistency < max.consistency,
-             consistency > min.consistency) %>%
-      #    filter(structure < max.structure,
-      #           structure > min.structure) %>%
-      arrange(anonid,trial)
-    
+             consistency > min.consistency)
+
     # filter by profiles
     profiles <- unique(dp$anonid)
     totaln <- length(profiles)
@@ -125,6 +124,12 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     }
     dp <- d.full %>%
       filter(anonid %in% pid)
+  }
+  
+  # sort
+  if(sort) {
+    dp <- dp %>%
+      arrange(consistency)
   }
 
   # prepare plot
