@@ -68,34 +68,19 @@ Part of our analysis is in Python. [BRM\_colouredvowels\_MantelCode.py](/BRM_col
 
 Also, if you're interested in the code for the online cross-modal association test, have a look at [SenseTest](/SenseTest).
 
-Sneak peek
-----------
+Examples
+--------
 
 What does it look like when you ask people to associate colours to vowel sounds? Here are some samples from the data (more details in the paper).
 
-``` r
-library(ggrepel)
-library(cowplot)
+These panels plot vowel-colour associations in vowel space, with I \[i\] top left, U \[u\] top right, and A \[a\] bottom center. Each I-A-U triangle represents the data for one participant. The small circles represent individual trials (randomly presented in the experiment), and each little row of three trials represents a single vowel sound (16 in total).
 
-stims <- read_delim(file="BRM_colouredvowels_stimuli_properties.tsv",delim="\t") %>%
-  plyr::rename(c("File" = "item","VowelCat" = "phoneme","Graphcat" = "grapheme"))
-
-d.wide <- d.voweldata %>%
-  mutate(item = as.numeric(item)) %>% # drop leading zero
-  gather("trial","colour", starts_with("color")) %>%
-  mutate(trial = sapply(trial,gsub,pattern="color",replacement="")) %>% # keep only trial number
-  dplyr::select(anonid,item,trial,colour) %>%
-  arrange(item) %>%
-  left_join(stims) # add stim metadata for easy plotting
-
-source(file="BRM_colouredvowels_functions.R")
-
-plot.nonsyn <- vowelplot(pid="f999ef")
-plot.syn <- vowelplot(pid="4e6aad")
-
-plot_grid(plot.nonsyn, plot.syn, labels = c("A", "B"))
-```
+The first panel shows the responses of six participants who score outside the synaesthetic range. There is quite a bit of irregularity: these participants seldom make exactly the same choice for a given item across trials, reflected in consistency scores of 140 and up (the higher, the more dissimilar the colours chosen across trials for an item). But some patterns also are apparent: the left side (with vowels like \[i, e\]) generally gets lighter, greener colours while the right side (with vowels like \[u, ɔ\] generally gets darker, bluer colours.
 
 ![](figs/examples-1.png)
 
-Colours chosen by a non-synaesthete (A) and a synaesthete (B) for 16 vowel sounds (each sound presented 3 times in total). While the synaesthete is more consistent in picking exactly the same colour for the same sound each time, both participants group sounds in terms of the vowel they belong to (for instance the three \[i:\]-like sounds, top left), and both structure their choices so that they pick lighter colours for \[i:\] than for \[u:\] (top right) and \[a:\] (bottom), revealing general principles underlying the associations.
+The second panel shows the responses of six participants who score inside the range usually considered synaesthetic. These participants are much more consistent in picking exactly the same colour for the same sound, reflected in consistency scores below 100 (the lower this score, the lower the colour distance within trials). Groupings can be easily discerned (e.g. many people group the first 2 or 3 items on the top left, representing \[i:\] sounds). But some trends are the same as in the non-synaesthetes. In particular, both groups structure their choices so that they pick lighter colours for \[i:\] than for \[u:\] (top right) and \[a:\] (bottom).
+
+![](figs/examples2-1.png)
+
+Note: You can easily plot your own and eyeball the associations using the `vowelspaces()` function.
