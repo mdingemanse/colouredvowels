@@ -3,13 +3,36 @@
 # Mark Dingemanse
 
 
+# tidy data ---------------------------------------------------------------
+
+library(ggrepel)
+library(cowplot)
+
+stims <- read_delim(file="BRM_colouredvowels_stimuli_properties.tsv",delim="\t") %>%
+  plyr::rename(c("File" = "item","VowelCat" = "phoneme","Graphcat" = "grapheme"))
+
+# wide version of vowel data for easier plotting
+d.wide <- d.voweldata %>%
+  mutate(item = as.numeric(item)) %>% # drop leading zero
+  gather("trial","colour", starts_with("color")) %>%
+  mutate(trial = sapply(trial,gsub,pattern="color",replacement="")) %>% # keep only trial number
+  dplyr::select(anonid,item,trial,colour) %>%
+  arrange(item) %>%
+  left_join(stims) # add stim metadata for easy plotting
+
+# full version combining vowels, stims & participants for visualisation functions
+d.full <- d.wide %>%
+  left_join(d.participants) %>%
+  dplyr::rename(consistency = ConsistencyScore, structure = StructureScore, p = "p-value")
+
 # generic ----------------------------------------------------------------
 
-findprofile <- function(string,data=NULL) {
-  # finds an anonid from a subset of characters
+
+fullpid <- function(string) {
+  # finds full anonid for shortened pid
+  # usage: fullpid("4e6aad")
   regexpattern <- paste0("^",string)
-  if(is.null(data)) { data <- d.participants }
-  unique(data[grep(regexpattern,data),"anonid"])
+  unique(d.full[grep(regexpattern,d.full$anonid),"anonid"])[[1]]
 }
 
 
@@ -48,8 +71,107 @@ vowelplot <- function(pid=NULL,saveplot=FALSE) {
   return(p)
 }
 
-# colplot() Code to display vowel plots for arbitrary numbers of participants,
-# selectable by consistency or structure scores
+# vowelspaces() 
 
-# <snip>(code needs refactoring)</snip>
+# Vowel plots for arbitrary numbers of participants, selectable by
+# consistency or structure scores
 
+# Usage: vowelspaces() 
+
+# Optional arguments:
+# pid= vector of profileid(s) to plot, e.g. pid=c("2267","abf7") (random selection if none given)
+# n= number of pids to randomly select for plotting when none specified
+# max.consistency, min.consistency: for selecting participants by consistency score
+# max.structure, min.structure: for selecting participants by structure score
+# printpid= logical, whether to print profileids when selecting pids randomly
+# savefile= logical, whether to output to png
+# keyword= keyword to use in the filename
+
+# If more than one pid is selected, plots will be faceted by pid.
+
+  
+vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,annotate=F,saveplot=FALSE,keyword=NULL,printpid=T) {
+
+  # TO DO
+  # add syn filter
+  # fix size
+  # set max number of plots in grid?
+  # add options for IPA, phoneme, grapheme labels
+    
+  # prepare data
+  if(is.null(pid)) {
+    
+    # if no pids are given, first filter data, then randomly select n pids
+    dp <- d.full %>%
+      filter(consistency < max.consistency,
+             consistency > min.consistency) %>%
+      #    filter(structure < max.structure,
+      #           structure > min.structure) %>%
+      arrange(anonid,trial)
+    
+    # filter by profiles
+    profiles <- unique(dp$anonid)
+    totaln <- length(profiles)
+    pid <- as.vector(unlist(sample_n(data.frame(profiles),n)))
+    print(paste0('No pids given, randomly sampling ',n,' from ',totaln,' left after applying thresholds'))
+    dp <- d.full %>%
+      filter(anonid %in% pid)
+    
+  } else {
+    # when pids are given, filter data on pids alone
+    n <- length(pid)
+    if (nchar(pid[1]) < 36) { # in case we're dealing with abbreviated profileids, find the full ones
+      pid <- unlist(lapply(pid,fullpid))
+    }
+    dp <- d.full %>%
+      filter(anonid %in% pid)
+  }
+
+  # prepare plot
+  
+  pid_labels <- function(string) {
+    consistency <- unique(dp[which(dp$anonid %in% string),]$consistency)
+    paste0(strtrim(string,6)," (C = ",round(consistency,digits=1),")")
+  }
+  
+  p <- ggplot(dp,aes(x=F2,y=F1)) +
+    theme_bw() + theme(legend.position="none", 
+                       axis.ticks=element_blank(),
+                       axis.title.x=element_blank(),
+                       axis.title.y=element_blank(),
+                       panel.grid.major = element_blank(), 
+                       panel.grid.minor = element_blank(),
+                       panel.border = element_blank()) + 
+    scale_fill_identity() +
+    # show I, A, U on axes instead of F1, F2 using a secondary axis
+    scale_x_continuous(trans = "reverse",limits=c(2500,400),
+                       breaks=1500,labels="A") +
+    scale_y_continuous(trans = "reverse",limits=c(800,200),
+                       breaks=200,labels="I",
+                       sec.axis = sec_axis(~. * 1, breaks=200,labels="U")) +
+    geom_point(pch=21,colour="grey",position=position_dodge(width=100),
+               aes(fill=colour),size=6) +
+    facet_wrap(~anonid, labeller = as_labeller(pid_labels)) +
+    theme(strip.background = element_rect(fill=NA,colour=NA),axis.line=element_blank(), axis.ticks=element_blank())
+  
+  if(annotate) {
+  # to be implemented
+  }
+
+  # save plot
+  if (saveplot) { 
+    pidstring <- paste0(strtrim(dp$anonid[1],6),"_",length(pid))
+    if (!is.null(keyword)) { pidstring <- paste0(keyword,"-",pidstring) }
+    filename <- paste0("out/colplot-",pidstring,".png")
+    print(paste("Saving as",filename))
+    ggsave(file=filename)
+  }
+  
+  # plot plot
+  suppressWarnings(print(p))
+  
+  
+  # printing pids can be useful if not included in plot
+  if(printpid) { print(pid) } 
+  
+}
