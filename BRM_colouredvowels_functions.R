@@ -22,8 +22,7 @@ d.wide <- d.voweldata %>%
 
 # full version combining vowels, stims & participants for visualisation functions
 d.full <- d.wide %>%
-  left_join(d.participants) %>%
-  dplyr::rename(consistency = ConsistencyScore, structure = StructureScore, p = "p-value")
+  left_join(d.participants)
 
 # generic ----------------------------------------------------------------
 
@@ -103,8 +102,8 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     
     # if no pids are given, first filter data, then randomly select n pids
     dp <- d.full %>%
-#      filter(structure < max.structure,
-#             structure > min.structure) %>%
+      filter(structure < max.structure,
+             structure > min.structure) %>%
       filter(consistency < max.consistency,
              consistency > min.consistency)
 
@@ -136,7 +135,8 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
   
   pid_labels <- function(string) {
     consistency <- unique(dp[which(dp$anonid %in% string),]$consistency)
-    paste0(strtrim(string,6)," (C = ",round(consistency,digits=1),")")
+    structure <- unique(dp[which(dp$anonid %in% string),]$structure)
+    paste0(strtrim(string,4)," (C = ",round(consistency,digits=0),", S = ",round(structure,digits=1),")")
   }
   
   p <- ggplot(dp,aes(x=F2,y=F1)) +
@@ -144,6 +144,7 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
                        axis.ticks=element_blank(),
                        axis.title.x=element_blank(),
                        axis.title.y=element_blank(),
+                       axis.text = element_text(size=12),
                        panel.grid.major = element_blank(), 
                        panel.grid.minor = element_blank(),
                        panel.border = element_blank()) + 
@@ -159,8 +160,8 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     facet_wrap(~anonid, labeller = as_labeller(pid_labels)) +
     theme(strip.background = element_rect(fill=NA,colour=NA),axis.line=element_blank(), axis.ticks=element_blank())
   
-  if(annotate) {
   # to be implemented
+  if(annotate) {
   }
 
   # save plot
@@ -174,8 +175,7 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
   
   # plot plot
   suppressWarnings(print(p))
-  
-  
+
   # printing pids can be useful if not included in plot
   if(printpid) { print(pid) } 
   

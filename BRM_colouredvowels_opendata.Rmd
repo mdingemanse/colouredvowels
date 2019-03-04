@@ -61,9 +61,9 @@ Participant metadata is in `d.participants` and looks like this:
 str(d.participants)
 ```
 
-The `anonid` allows linking across test results and metadata. Age and binarised gender were recorded using an optional pre-test questionnaire, which about 75% of participants filled out. Age (`age_bin`) is binned to ensure participant privacy; reported age range is 18-88 (median = 46, SD = 16).  Participants identifying as female are overrepresented, which is common in self-selecting online studies.
+The `anonid` allows linking across test results and metadata. Age, binarised gender and self-reported synaesthesia were recorded using an optional pre-test questionnaire, which about 75% of participants filled out. Age (`age_bin`) is binned to ensure participant privacy; reported age range is 18-88 (median = 46, SD = 16).  Participants identifying as female are overrepresented, which is common in self-selecting online studies. In the paper, we don't use self-reported synaesthesia in the analyses as we don't know what types of synaesthesia people may have; instead, we compute synaesthesia based on the consistency of people's responses across three trials in grapheme-colour and vowel-colour tasks (`syn_status`), as customary in synaesthesia research.
 
-`ConsistencyScore` is an overall measure of consistency in colour choices, based on distances in CIELuv space. 34 out of 1164 participants received no consistency score as they chose "No colour" for more than half of the items. `SynStatus` is a synaesthesia classification based on the consistency score, as reported in the paper; we identified 365 synaesthetes. Finally, `r`, `StructureScore` (also called *z score* in the paper), and `p-value` are related to the novel Structure measure we introduce in the paper, which characterizes the degree to which participants' responses are structure isomorphically across modalities.
+`consistency` is an overall measure of consistency in colour choices, based on distances in CIELuv space (lower = more consistent). 34 out of 1164 participants received no consistency score as they chose "No colour" for more than half of the items. `syn_status` is a synaesthesia classification based on the consistency score, as reported in the paper; we identified 365 synaesthetes. Finally, `r`, `structure` (also called *z score* in the paper), and `p-value` are related to the novel Structure measure we introduce in the paper, which characterizes the degree to which participants' responses are structured isomorphically across modalities (higher = more isomorphic).
 
 ## Code
 Part of our analysis is in Python. [BRM_colouredvowels_MantelCode.py](/BRM_colouredvowels_MantelCode.py) has the code for computing structure scores using the Mantel test.
@@ -92,4 +92,11 @@ The second panel shows the responses of six participants who score inside the ra
 vowelspaces(pid=c("3ef5aa","0d9e6f","1e8c98","45a9c6","d15f46","29a443"),printpid=F)
 ```
 
-Note: You can easily plot your own and eyeball the associations using the `vowelspaces()` function.
+While these are fairly representative, they still divide the data into non-synaesthetes and synaesthetes, which may or may not make sense depending on your taste or theoretical commitments. Using `vowelspaces()`, you can easily plot larger arrays from the raw data and sort by consistency score to see the increasing entropy. And since this is the full dataset, expect to see weird patterns or NA responses sometimes as well.
+
+```{r examples3,echo=FALSE, warning=FALSE,message=FALSE}
+vowelspaces(sort=T,min.consistency=30,max.consistency=135,n=12,printpid=F)
+vowelspaces(sort=T,min.consistency=135,max.consistency=210,n=12,printpid=F)
+vowelspaces(sort=T,min.consistency=210,max.consistency=350,n=12,printpid=F)
+
+```
