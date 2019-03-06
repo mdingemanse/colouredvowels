@@ -74,29 +74,38 @@ Also, if you're interested in the code for the online cross-modal association te
 
 What does it look like when you ask people to associate colours to vowel sounds? Here are some samples from the data (more details in the paper). 
 
-These panels plot vowel-colour associations in vowel space, with I [i] top left, U [u] top right, and A [a] bottom center. Each I-A-U triangle represents the data for one participant. The small circles represent individual trials (randomly presented in the experiment), and each little row of three trials represents a single vowel sound (16 in total). 
+These panels plot vowel-colour associations in vowel space, with *i* top left, *u* top right, and *a* bottom center. Each triangle represents the data for one participant. The small circles represent individual trials (randomly presented in the experiment), and each little row of three trials represents a single vowel sound (16 in total). 
 
-The first panel shows the responses of six participants who score outside the synaesthetic range. There is quite a bit of irregularity: these participants seldom make exactly the same choice for a given item across trials, reflected in consistency scores of 140 and up (the higher, the more dissimilar the colours chosen across trials for an item). But some patterns also are apparent: the left side (with vowels like [i, e]) generally gets lighter, greener colours while the right side (with vowels like [u, ɔ] generally gets darker, bluer colours.
+The first panel shows 12 participants who score inside the range usually considered synaesthetic. These participants succeed in picking very similar colours each time they hear the same sound, reflected in consistency scores below 135 (the lower this score, the lower the colour distance within trials). Groupings can be easily discerned — for instance, many people group the first 2 or 3 items on the top left, representing *i* sounds. And most seem to pick lighter colours for [i] than for [a], while the darkest colours tend to be reserved for [u].
+
 
 ```{r examples, echo=FALSE, warning=FALSE, message=FALSE}
 source(file="BRM_colouredvowels_functions.R")
 
-# 6 participants scoring outside the synaesthetic range
-vowelspaces(pid=c("1072e1","ad6286","7d5e9f","3c8587","25688f","0c6dd7"),printpid=F)
+# 12 relatively structured participants scoring in the synaesthete range
+vowelspaces(n=12,max.consistency=135,min.structure=3.7,sort=T,printpid=F)
 ```
 
-The second panel shows the responses of six participants who score inside the range usually considered synaesthetic. These participants are much more consistent in picking exactly the same colour for the same sound, reflected in consistency scores below 100 (the lower this score, the lower the colour distance within trials). Groupings can be easily discerned (e.g. many people group the first 2 or 3 items on the top left, representing [i:] sounds). But some trends are the same as in the non-synaesthetes. In particular, both groups structure their choices so that they pick lighter colours for [i:] than for [u:] (top right) and [a:] (bottom).
+The second panel shows the responses of 12 participants who score outside the synaesthetic range. There is quite a bit of irregularity: these participants seldom make exactly the same choice for a given item across trials, reflected in consistency scores of 135 and up (the higher, the more dissimilar the colours chosen across trials for an item). But like with the synaesthetes, some patterns do appear: the left side (with vowels like [i, e]) generally gets lighter, greener colours while the right side (with vowels like [u, ɔ] generally gets darker, bluer colours.
 
 ```{r examples2, echo=FALSE, warning=FALSE, message=FALSE}
-# 6 participants scoring in the synaesthete range
-vowelspaces(pid=c("3ef5aa","0d9e6f","1e8c98","45a9c6","d15f46","29a443"),printpid=F)
+# 12 relatively structured participants scoring outside the synaesthetic range
+vowelspaces(n=12,min.consistency=135,min.structure=3.7,sort=T,printpid=F)
 ```
 
-While these are fairly representative, they still divide the data into non-synaesthetes and synaesthetes, which may or may not make sense depending on your taste or theoretical commitments. Using `vowelspaces()`, you can easily plot larger arrays from the raw data and sort by consistency score to see the increasing entropy. And since this is the full dataset, expect to see weird patterns or NA responses sometimes as well.
+### More data
+While the above plots are fairly representative, they still divide the data into non-synaesthetes and synaesthetes, which may or may not make sense depending on your taste or theoretical commitments. Using `vowelspaces()`, we can easily plot larger arrays from the raw data and sort by consistency score to see the increasing entropy of choices. Since these are semi-randomly drawn from the full dataset, expect to see weird patterns or NA responses sometimes as well. Here are three successive sets of 12 participants roughly representing three tertiles of consistency scores (<135, 135-210, >210):
 
 ```{r examples3,echo=FALSE, warning=FALSE,message=FALSE}
 vowelspaces(sort=T,min.consistency=30,max.consistency=135,n=12,printpid=F)
 vowelspaces(sort=T,min.consistency=135,max.consistency=210,n=12,printpid=F)
 vowelspaces(sort=T,min.consistency=210,max.consistency=350,n=12,printpid=F)
 
+```
+
+A key metric we introduce in the paper is Structure, which measures the degree to which domains are mapped isomorphically. One finding of our study is that the associations of over two thirds of people show a significant degree of structure. These structured solutions to mapping the vowel and colour spaces are surprisingly similar across participants, as can be seen especially clearly for participants in the upper quartile of the structure scores:
+
+```{r examples4,echo=FALSE, warning=FALSE, message=FALSE}
+# high structure is beautiful regardless of consistency
+vowelspaces(min.structure=6.1,n=16,printpid=F,sort=T)
 ```
