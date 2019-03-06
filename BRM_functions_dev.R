@@ -35,6 +35,28 @@ unlist(test)
 # high structure is beautiful regardless of consistency
 vowelspaces(min.structure=6.1,n=16,printpid=F,sort=T)
 
+# the most beautiful corner: lower quartile of consistency, upper quartile of structure
+vowelspaces(max.consistency=120,min.structure=6.1,n=12,printpid=F)
+
+# the most messy corner: exactly the inverse
+vowelspaces(min.consistency=237,max.structure=1.2,n=12,printpid=F)
+
+# participants with structure >6 demonstrate the correlations most clearly
+vowelspaces(min.consistency=30,max.consistency=135,min.structure=6,n=16,printpid=F,sort=T)
+vowelspaces(min.consistency=135,max.consistency=500,min.structure=6,n=16,printpid=F,sort=T)
+
+# >70% of participants have significantly more structure than randomly generated mappings
+vowelspaces(max.consistency=135,min.structure=2,n=16,printpid=F,sort=T)
+vowelspaces(min.consistency=135,min.structure=2,n=16,printpid=F,sort=T)
+
+# high structure is beautiful regardless of consistency
+vowelspaces(min.structure=6.1,n=16,printpid=F,sort=T)
+
+
+# high structure is beautiful regardless of consistency
+vowelspaces(min.structure=2,n=16,printpid=F,sort=T)
+>>>>>>> 5cfb71218410bb5b9511048c9cce5b67213d67e4
+
 vowelspaces(min.consistency=30,max.consistency=135,min.structure=6,n=12,printpid=F)
 
 vowelspaces(min.consistency=135,max.consistency=400,min.structure=6,n=12,printpid=F)
