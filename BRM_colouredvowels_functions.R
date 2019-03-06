@@ -89,12 +89,10 @@ vowelplot <- function(pid=NULL,saveplot=FALSE) {
 # If more than one pid is selected, plots will be faceted by pid.
 
   
-vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,sort=F,annotate=F,saveplot=FALSE,keyword=NULL,printpid=T) {
+vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,sort=F,showvowels=T,saveplot=FALSE,keyword=NULL,printpid=T) {
 
   # TO DO
-  # add syn filter
-  # fix size
-  # set max number of plots in grid?
+  # add syn_status filter?
   # add options for IPA, phoneme, grapheme labels
     
   # prepare data
@@ -144,24 +142,27 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
                        axis.ticks=element_blank(),
                        axis.title.x=element_blank(),
                        axis.title.y=element_blank(),
-                       axis.text = element_text(size=12),
                        panel.grid.major = element_blank(), 
                        panel.grid.minor = element_blank(),
                        panel.border = element_blank()) + 
     scale_fill_identity() +
-    # show I, A, U on axes instead of F1, F2 using a secondary axis
     scale_x_continuous(trans = "reverse",limits=c(2500,400),
-                       breaks=1500,labels="A") +
+                       breaks=NULL) +
     scale_y_continuous(trans = "reverse",limits=c(800,200),
-                       breaks=200,labels="I",
-                       sec.axis = sec_axis(~. * 1, breaks=200,labels="U")) +
-    geom_point(pch=21,colour="grey",position=position_dodge(width=100),
+                       breaks=NULL) +
+    geom_point(pch=21,colour="#cccccc",position=position_dodge(width=200),
                aes(fill=colour),size=6) +
     facet_wrap(~anonid, labeller = as_labeller(pid_labels)) +
     theme(strip.background = element_rect(fill=NA,colour=NA),axis.line=element_blank(), axis.ticks=element_blank())
   
-  # to be implemented
-  if(annotate) {
+  
+  if(showvowels) {
+    p <- p +
+      annotate("text",x=2000,y=300,label="i") +
+      annotate("text",x=1525,y=600,label="a") +
+      annotate("text",x=1050,y=300,label="u") +
+      annotate("text",x=1840,y=450,label="e") +
+      annotate("text",x=1211,y=450,label="o")
   }
 
   # save plot
