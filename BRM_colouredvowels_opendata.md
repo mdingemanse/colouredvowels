@@ -73,26 +73,14 @@ Examples
 
 What does it look like when you ask people to associate colours to vowel sounds? Here are some samples from the data (more details in the paper).
 
-These panels plot vowel-colour associations in vowel space, with I \[i\] top left, U \[u\] top right, and A \[a\] bottom center. Each I-A-U triangle represents the data for one participant. The small circles represent individual trials (randomly presented in the experiment), and each little row of three trials represents a single vowel sound (16 in total).
+These panels plot vowel-colour associations in vowel space, with *i* top left, *u* top right, and *a* bottom center. Each triangle represents the data for one participant. The small circles represent individual trials (randomly presented in the experiment), and each little row of three trials represents a single vowel sound (16 in total).
 
-The first panel shows the responses of six participants who score outside the synaesthetic range. There is quite a bit of irregularity: these participants seldom make exactly the same choice for a given item across trials, reflected in consistency scores of 140 and up (the higher, the more dissimilar the colours chosen across trials for an item). But some patterns also are apparent: the left side (with vowels like \[i, e\]) generally gets lighter, greener colours while the right side (with vowels like \[u, ɔ\] generally gets darker, bluer colours.
+A key metric we introduce in the paper is *Structure*, which uses a Mantel test to measure the degree to which domains are mapped isomorphically. One finding of our study is that the associations of over two thirds of people show a significant degree of structure. These structured solutions to mapping the vowel and colour spaces are surprisingly similar across participants (whether synaesthete or not): most people pick lighter colours for \[i\] than for \[a\], and the darkest colours tend to be reserved for \[o\] and \[u\]. The patterns can be seen most clearly for participants in the upper quartile of the structure scores:
 
 ![](figs/examples-1.png)
 
-The second panel shows the responses of six participants who score inside the range usually considered synaesthetic. These participants are much more consistent in picking exactly the same colour for the same sound, reflected in consistency scores below 100 (the lower this score, the lower the colour distance within trials). Groupings can be easily discerned (e.g. many people group the first 2 or 3 items on the top left, representing \[i:\] sounds). But some trends are the same as in the non-synaesthetes. In particular, both groups structure their choices so that they pick lighter colours for \[i:\] than for \[u:\] (top right) and \[a:\] (bottom).
+In studies of synaesthesia, colour associations are often turned into a *consistency score* by taking the average distance between colour choices across trials (the consistency score is expressed in terms of these distances, so a lower score implies choices were more similar across trials for the same item). In the panel above, the 12 partipants are arranged from low consistency score (= more synaesthetic) to high consistency score (= less synaesthetic).
 
-![](figs/examples2-1.png)
+Deciding that someone has synaesthesia is usually based on a cut-off point. In the CIELuv space, which we use here, a common threshold is 135: below this, people qualify as synaesthetes. However, our Structure measure finds structured, isomorphic mappings across the board, and while there is a correlation (lower consistency scores correlate with higher structure scores) it is not clear that there is a categorical dividing line between synaesthetes and nonsynaestetes with regard to the structure of their mappings.
 
-While these are fairly representative, they still divide the data into non-synaesthetes and synaesthetes, which may or may not make sense depending on your taste or theoretical commitments. Using `vowelspaces()`, you can easily plot larger arrays from the raw data and sort by consistency score to see the increasing entropy. And since this is the full dataset, expect to see weird patterns or NA responses sometimes as well.
-
-    ## [1] "No pids given, randomly sampling 12 from 351 left after applying thresholds"
-
-![](figs/examples3-1.png)
-
-    ## [1] "No pids given, randomly sampling 12 from 385 left after applying thresholds"
-
-![](figs/examples3-2.png)
-
-    ## [1] "No pids given, randomly sampling 12 from 347 left after applying thresholds"
-
-![](figs/examples3-3.png)
+One reason we collected this dataset was because we are interested in the full range of diversity in cross-modal associations, from the most automatic synaesthetic concurrents to more elicited, consciously made cross-modal mappings. Dividing the data into non-synaesthetes and synaesthetes may or may not make sense depending on the data (not to mention taste, theoretical commitments or terminological preferences). This is why we make available the dataset as a whole, including all colour associations, consistency scores, and classifications based on those scores. We hope this will inform future work on the relation between cross-modal associations and synaesthesia, and on the relation between consistency and structure in synaesthetic and cross-modal associations.

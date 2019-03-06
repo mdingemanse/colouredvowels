@@ -6,7 +6,6 @@
 # tidy data ---------------------------------------------------------------
 
 library(ggrepel)
-library(cowplot)
 
 stims <- read_delim(file="BRM_colouredvowels_stimuli_properties.tsv",delim="\t") %>%
   plyr::rename(c("File" = "item","VowelCat" = "phoneme","Graphcat" = "grapheme"))
@@ -17,7 +16,7 @@ d.wide <- d.voweldata %>%
   gather("trial","colour", starts_with("color")) %>%
   mutate(trial = sapply(trial,gsub,pattern="color",replacement="")) %>% # keep only trial number
   dplyr::select(anonid,item,trial,colour) %>%
-  arrange(item) %>%
+  arrange(anonid,item) %>%
   left_join(stims) # add stim metadata for easy plotting
 
 # full version combining vowels, stims & participants for visualisation functions
@@ -88,8 +87,7 @@ vowelplot <- function(pid=NULL,saveplot=FALSE) {
 
 # If more than one pid is selected, plots will be faceted by pid.
 
-  
-vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,sort=F,showvowels=T,saveplot=FALSE,keyword=NULL,printpid=T) {
+vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.structure=10,min.structure=-2,sort.structure=F,sort.consistency=F,showvowels=T,saveplot=FALSE,keyword=NULL,printpid=T) {
 
   # TO DO
   # add syn_status filter?
@@ -108,7 +106,7 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     # filter by profiles
     profiles <- unique(dp$anonid)
     totaln <- length(profiles)
-    pid <- as.vector(unlist(sample_n(data.frame(profiles),n)))
+    pid <- sort(as.vector(unlist(sample_n(data.frame(profiles),n))))
     print(paste0('No pids given, randomly sampling ',n,' from ',totaln,' left after applying thresholds'))
     dp <- d.full %>%
       filter(anonid %in% pid)
@@ -117,25 +115,29 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
     # when pids are given, filter data on pids alone
     n <- length(pid)
     if (nchar(pid[1]) < 36) { # in case we're dealing with abbreviated profileids, find the full ones
-      pid <- unlist(lapply(pid,fullpid))
+      pid <- sort(unlist(lapply(pid,fullpid)))
     }
     dp <- d.full %>%
       filter(anonid %in% pid)
   }
   
-  # sort
-  if(sort) {
+  # sort (note this precludes use of both at the same time)
+  if(sort.structure) {
     dp <- dp %>%
-      group_by(anonid) %>%
-      arrange(consistency)
+      arrange(structure,anonid) %>%
+      mutate(anonid = fct_inorder(anonid))
   }
-
+  if(sort.consistency) {
+    dp <- dp %>%
+      arrange(consistency,anonid) %>%
+      mutate(anonid = fct_inorder(anonid))
+  }
+  
   # prepare plot
   
   pid_labels <- function(labelthis) {
-    print(paste0('labeler: ', labelthis))
     nlabels <- length(unique(labelthis))
-    labeldata <- dp %>% filter(anonid %in% labelthis) %>% select(anonid,consistency,structure) %>% slice(1:nlabels)
+    labeldata <- dp %>% filter(anonid %in% labelthis) %>% select(anonid,consistency,structure) %>% unique()
     paste0(strtrim(labeldata$anonid,4)," (C = ",round(labeldata$consistency,digits=0),", S = ",round(labeldata$structure,digits=1),")")
   }
   
@@ -171,15 +173,14 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
   if (saveplot) { 
     pidstring <- paste0(strtrim(dp$anonid[1],6),"_",length(pid))
     if (!is.null(keyword)) { pidstring <- paste0(keyword,"-",pidstring) }
-    filename <- paste0("out/colplot-",pidstring,".png")
+    filename <- paste0("vowelspaces-",pidstring,".png")
     print(paste("Saving as",filename))
     ggsave(file=filename)
   }
-  
-  # plot plot
-  suppressWarnings(print(p))
 
   # printing pids can be useful if not included in plot
   if(printpid) { print(pid) } 
   
+  # plot plot
+  suppressWarnings(print(p))
 }

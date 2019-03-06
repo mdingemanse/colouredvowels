@@ -4,58 +4,38 @@
 
 # This is a work space — expect buggy code
 
-# diagnose sorting issue
-vowelspaces(pid=c("4e6aad","f999ef","ba1a3f","37c4f1"),printpid=F)
+source(file="BRM_colouredvowels_functions.R")
 
-# 4e6a = synaesthete with blue /i/ and red /u/
-# f999 = non-syn with yellow /i/ and purple /u/
-
-fullpids <- unlist(lapply(c("4e6aad","f999ef","ba1a3f","37c4f1"),fullpid))
-d.participants %>% filter (anonid %in% fullpids) %>% select(anonid,consistency,structure)
-
-dp <- d.full %>%
-  filter(anonid %in% fullpids)
-
-pid_labels <- function(labelthis) {
-  print(paste0('labeler: ', labelthis))
-  nlabels <- length(unique(labelthis))
-  labeldata <- dp %>% filter(anonid %in% labelthis) %>% select(anonid,consistency,structure) %>% slice(1:nlabels)
-  paste0(strtrim(labeldata$anonid,4)," (C = ",round(labeldata$consistency,digits=0),", S = ",round(labeldata$structure,digits=1),")")
-}
-
-pid_labels(fullpids)
-nlabels = 4
-f <- function(n) paste0(strtrim(labeldata$anonid,4)," (C = ",round(labeldata$consistency,digits=0),", S = ",round(labeldata$structure,digits=1),")")
-labels_pids <- setNames(sapply(unique))
-  
-dp %>% filter(anonid %in% fullpids) %>% select(anonid,consistency,structure) %>% slice(1:nlabels)
-unlist(test)
+# 4 plots for press materials
+p1 <- vowelspaces(pid=c("4e6a","a3b6"),sort.consistency=T,printpid=F)
+ggsave(file="vowelspaces-examples-syn.png",width=4,height=2)
+p2 <- vowelspaces(pid=c("696c","15fa"),sort.consistency=T,printpid=F)
+ggsave(file="vowelspaces-examples-nonsyn.png",width=4,height=2)
 
 
 # high structure is beautiful regardless of consistency
-vowelspaces(min.structure=6.1,n=16,printpid=F,sort=T)
+vowelspaces(min.structure=4.1,n=16,sort.consistency=T,printpid=F)
 
-# the most beautiful corner: lower quartile of consistency, upper quartile of structure
+# the most regular corner: lower quartile of consistency, upper quartile of structure
 vowelspaces(max.consistency=120,min.structure=6.1,n=12,printpid=F)
 
 # the most messy corner: exactly the inverse
 vowelspaces(min.consistency=237,max.structure=1.2,n=12,printpid=F)
 
 # participants with structure >6 demonstrate the correlations most clearly
-vowelspaces(min.consistency=30,max.consistency=135,min.structure=6,n=16,printpid=F,sort=T)
-vowelspaces(min.consistency=135,max.consistency=500,min.structure=6,n=16,printpid=F,sort=T)
+vowelspaces(min.consistency=30,max.consistency=135,min.structure=6,n=16,printpid=F,sort.structure=T)
+vowelspaces(min.consistency=135,max.consistency=500,min.structure=6,n=16,printpid=F,sort.structure=T)
 
 # >70% of participants have significantly more structure than randomly generated mappings
-vowelspaces(max.consistency=135,min.structure=2,n=16,printpid=F,sort=T)
-vowelspaces(min.consistency=135,min.structure=2,n=16,printpid=F,sort=T)
+vowelspaces(max.consistency=135,min.structure=2,n=16,printpid=F,sort.consistency=T)
+vowelspaces(min.consistency=135,min.structure=2,n=16,printpid=F,sort.consistency=T)
 
 # high structure is beautiful regardless of consistency
-vowelspaces(min.structure=6.1,n=16,printpid=F,sort=T)
+vowelspaces(min.structure=6.1,n=16,printpid=F,sort.consistency=T)
 
 
 # high structure is beautiful regardless of consistency
 vowelspaces(min.structure=2,n=16,printpid=F,sort=T)
->>>>>>> 5cfb71218410bb5b9511048c9cce5b67213d67e4
 
 vowelspaces(min.consistency=30,max.consistency=135,min.structure=6,n=12,printpid=F)
 
