@@ -138,7 +138,7 @@ vowelspaces <- function(pid=NULL,n=9,max.consistency=500,min.consistency=0,max.s
   pid_labels <- function(labelthis) {
     nlabels <- length(unique(labelthis))
     labeldata <- dp %>% filter(anonid %in% labelthis) %>% select(anonid,consistency,structure) %>% unique()
-    paste0(strtrim(labeldata$anonid,4)," (C = ",round(labeldata$consistency,digits=0),", S = ",round(labeldata$structure,digits=1),")")
+    paste0("C = ",round(labeldata$consistency,digits=0),", S = ",round(labeldata$structure,digits=1))
   }
   
   p <- ggplot(dp,aes(x=F2,y=F1)) +

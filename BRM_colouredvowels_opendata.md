@@ -84,3 +84,10 @@ In studies of synaesthesia, colour associations are often turned into a *consist
 Deciding that someone has synaesthesia is usually based on a cut-off point. In the CIELuv space, which we use here, a common threshold is 135: below this, people qualify as synaesthetes. However, our Structure measure finds structured, isomorphic mappings across the board, and while there is a correlation (lower consistency scores correlate with higher structure scores) it is not clear that there is a categorical dividing line between synaesthetes and nonsynaestetes with regard to the structure of their mappings.
 
 One reason we collected this dataset was because we are interested in the full range of diversity in cross-modal associations, from the most automatic synaesthetic concurrents to more elicited, consciously made cross-modal mappings. Dividing the data into non-synaesthetes and synaesthetes may or may not make sense depending on the data (not to mention taste, theoretical commitments or terminological preferences). This is why we make available the dataset as a whole, including all colour associations, consistency scores, and classifications based on those scores. We hope this will inform future work on the relation between cross-modal associations and synaesthesia, and on the relation between consistency and structure in synaesthetic and cross-modal associations.
+
+Usage
+-----
+
+If you end up using the data or code released here, we ask you to cite the accompanying paper and link to this repository. Both are under a Creative Commons Attribution license.
+
+Also: *there is more where this came from*. We're already working on a few follow-up papers with large-scale data from other cross-modal tasks. But if you have a cool idea you'd like to check, or a neat analysis or visualization technique that you think would be useful for this kind of data, do get in touch with us! We're always interested in exploring opportunities for collaboration.
